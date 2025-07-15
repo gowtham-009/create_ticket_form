@@ -118,36 +118,36 @@
                     <!-- Create Tab Content -->
                     <div id="createTabContent">
                         <!-- Branch and Employee Info -->
-                      
+
 
                         <!-- Form -->
                         <form id="ticketForm" class="space-y-6">
 
-                              <div class="mb-6">
-                            <div class="text-sm text-gray-600 mb-1">
-                                <span class="font-medium text-gray-800">Branch Name & Code :</span>
-                                <span class="font-medium text-gray-800" id="branchname"></span>  &  <span class="font-medium text-gray-800" id="branchcode"></span>
+                            <div class="mb-6">
+                                <div class="text-sm text-gray-600 mb-1">
+                                    <span class="font-medium text-gray-800">Branch Name & Code :</span>
+                                    <span class="font-medium text-gray-800" id="branchname"></span> & <span
+                                        class="font-medium text-gray-800" id="branchcode"></span>
+                                </div>
+                                <div class="text-sm text-gray-500">
+                                    Employee Name & Code : <span id="employeeName"></span> & <span
+                                        id="employeecode"></span>
+                                </div>
                             </div>
-                            <div class="text-sm text-gray-500">
-                                Employee Name & Code : <span id="employeeName"></span>  &  <span id="employeecode"></span>
-                            </div>
-                        </div>
                             <!-- Client Code -->
                             <div>
                                 <input type="text" id="clientCode" placeholder="Client Code"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                    >
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500">
 
-                                    <span class="text-red-500 text-sm" id="invalidclientcode"> </span>
+                                <span class="text-red-500 text-sm" id="invalidclientcode"> </span>
                             </div>
 
-                            
+
 
                             <!-- Category Dropdown -->
                             <div>
                                 <select id="category"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white appearance-none"
-                                    >
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white appearance-none">
                                     <option value="" disabled selected>Select Category</option>
                                     <option value="account">Account Details</option>
                                     <option value="brokerage">Brokerage & Other Charges</option>
@@ -168,7 +168,7 @@
                             <div>
                                 <select id="subCategory"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white appearance-none"
-                                     disabled>
+                                    disabled>
                                     <option value="" disabled selected>Select Sub Category</option>
                                 </select>
                             </div>
@@ -198,7 +198,7 @@
                                         </svg>
                                         <p class="text-goodwill-blue font-medium mb-2">Browse file to upload</p>
                                         <p class="text-sm text-gray-500">Drag and drop files here or click to browse</p>
-                                        <input type="file" id="fileUpload" class="hidden" 
+                                        <input type="file" id="fileUpload" class="hidden"
                                             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif">
                                     </div>
                                 </div>
@@ -211,11 +211,11 @@
 
                             <!-- Submit Button -->
                             <div class="pt-4">
-                            <button type="submit" id="createtokenbtn"
-                                class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                                disabled>
-                                Create Ticket
-                            </button>
+                                <button type="submit" id="createtokenbtn"
+                                    class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                    disabled>
+                                    Create Ticket
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -264,10 +264,10 @@
                                 </div>
                             </div>
 
-                           
 
 
-                          
+
+
                         </div>
                     </div>
 
@@ -298,8 +298,9 @@
                     </svg>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2" id="success"></h3>
-                <p class="text-center text-gray-500 text-lg" style="margin-top: -13px;">Ticket No:<span id="ticketid"></span></p>
-               
+                <p class="text-center text-gray-500 text-lg" style="margin-top: -13px;">Ticket No:<span
+                        id="ticketid"></span></p>
+
                 <button id="closeModal"
                     class="bg-goodwill-blue mt-2 text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
                     Close
@@ -308,18 +309,19 @@
         </div>
     </div>
 
-      <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-lg p-6 max-w-sm mx-4 transform transition-all duration-300 scale-95">
             <div class="text-center">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.29 3.86L1.82 18a1 1 0 0 0 .86 1.5h18.64a1 1 0 0 0 .86-1.5L13.71 3.86a1 1 0 0 0-1.72 0zM12 9v4m0 4h.01" />
-            </svg>
+                    <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.29 3.86L1.82 18a1 1 0 0 0 .86 1.5h18.64a1 1 0 0 0 .86-1.5L13.71 3.86a1 1 0 0 0-1.72 0zM12 9v4m0 4h.01" />
+                    </svg>
 
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2" id="error"></h3>
                 <p class="text-center" id="ticketid"></p>
-               
+
                 <button id="closeModalerror"
                     class="bg-goodwill-blue text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
                     Close
@@ -542,10 +544,10 @@
 
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
-            
+
             document.getElementById('branchname').innerText = `${urlParams.get('branchname')}`;
-             document.getElementById('branchcode').innerText = `${urlParams.get('branchcode')}`;
-              document.getElementById('employeeName').innerText = `${urlParams.get('empName')}`;
+            document.getElementById('branchcode').innerText = `${urlParams.get('branchcode')}`;
+            document.getElementById('employeeName').innerText = `${urlParams.get('empName')}`;
 
             document.getElementById('employeecode').innerText = `${urlParams.get('empCode')}`
 
@@ -554,7 +556,7 @@
 
         const quill = new Quill('#editor', {
             theme: 'snow',
-           
+
             modules: {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
@@ -568,89 +570,89 @@
                 ]
             }
         });
-document.getElementById('createtokenbtn').disabled = true;
+        document.getElementById('createtokenbtn').disabled = true;
 
 
-let isClientCodeValid = false;
-const clientcodecheck=document.getElementById('clientCode')
-clientcodecheck.addEventListener('change', async function () {
-    const clientCode = clientcodecheck.value.trim();
-    const clienterror = document.getElementById('invalidclientcode');
+        let isClientCodeValid = false;
+        const clientcodecheck = document.getElementById('clientCode')
+        clientcodecheck.addEventListener('change', async function () {
+            const clientCode = clientcodecheck.value.trim();
+            const clienterror = document.getElementById('invalidclientcode');
 
-    if (clientCode) {
-        try {
-            const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=cEVMQTFzeXorS3FLZk42UEhMVGh1UT09&cid=${clientCode}`;
-            
-            const response = await fetch(apiurl);
-            const data = await response.json();
+            if (clientCode) {
+                try {
+                    const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=cEVMQTFzeXorS3FLZk42UEhMVGh1UT09&cid=${clientCode}`;
 
-             const branchurlParams = new URLSearchParams(window.location.search);
+                    const response = await fetch(apiurl);
+                    const data = await response.json();
+
+                    const branchurlParams = new URLSearchParams(window.location.search);
 
 
-            if ( data.BranchCode === branchurlParams.get('branchcode')) {
-                clienterror.textContent = '';
-                isClientCodeValid = true;
+                    if (data.BranchCode === branchurlParams.get('branchcode')) {
+                        clienterror.textContent = '';
+                        isClientCodeValid = true;
+                    } else {
+                        clienterror.textContent = 'Invalid client code.';
+                        isClientCodeValid = false;
+                    }
+
+                } catch (error) {
+                    console.error('Error checking client code:', error);
+                    clienterror.textContent = 'Invalid client code.';
+                    isClientCodeValid = false;
+                }
             } else {
-                clienterror.textContent = 'Invalid client code.';
+                clienterror.textContent = 'Client code is required.';
                 isClientCodeValid = false;
             }
 
-        } catch (error) {
-            console.error('Error checking client code:', error);
-            clienterror.textContent = 'Invalid client code.';
-            isClientCodeValid = false;
+            validateForm(); // Re-run validation after API check
+        });
+        // Function to check if all required fields are filled
+        function validateForm() {
+            const clientCode = document.getElementById('clientCode').value.trim();
+            const category = document.getElementById('category').value;
+            const subCategory = document.getElementById('subCategory').value;
+            const subject = document.getElementById('subject').value.trim();
+            const editorContent = quill.root.innerHTML.trim();
+            const branchname = document.getElementById('branchname').innerText.trim();
+            const employeeName = document.getElementById('employeeName').innerText.trim();
+            const branchcode = document.getElementById('branchcode').innerText.trim();
+            const employeeCode = document.getElementById('employeecode').innerText.trim();
+
+            const isValid = (
+                clientCode !== '' &&
+                isClientCodeValid && // ✅ Check if client code is valid
+                category !== '' &&
+                subCategory !== '' &&
+                subject !== '' &&
+                editorContent !== '<p><br></p>' &&
+                branchname !== '' &&
+                employeeName !== '' &&
+                branchcode !== '' &&
+                employeeCode !== ''
+            );
+
+            document.getElementById('createtokenbtn').disabled = !isValid;
+            return isValid;
         }
-    } else {
-        clienterror.textContent = 'Client code is required.';
-        isClientCodeValid = false;
-    }
+        // Add direct event listeners without debouncing
+        document.getElementById('clientCode').addEventListener('input', validateForm);
+        document.getElementById('category').addEventListener('change', validateForm);
+        document.getElementById('subCategory').addEventListener('change', validateForm);
+        document.getElementById('subject').addEventListener('input', validateForm);
+        quill.on('text-change', validateForm);
 
-    validateForm(); // Re-run validation after API check
-});
-// Function to check if all required fields are filled
-function validateForm() {
-    const clientCode = document.getElementById('clientCode').value.trim();
-    const category = document.getElementById('category').value;
-    const subCategory = document.getElementById('subCategory').value;
-    const subject = document.getElementById('subject').value.trim();
-    const editorContent = quill.root.innerHTML.trim();
-    const branchname = document.getElementById('branchname').innerText.trim();
-    const employeeName = document.getElementById('employeeName').innerText.trim();
-    const branchcode = document.getElementById('branchcode').innerText.trim();
-    const employeeCode = document.getElementById('employeecode').innerText.trim();
-
-    const isValid = (
-        clientCode !== '' &&
-        isClientCodeValid && // ✅ Check if client code is valid
-        category !== '' &&
-        subCategory !== '' &&
-        subject !== '' &&
-        editorContent !== '<p><br></p>' &&
-        branchname !== '' &&
-        employeeName !== '' &&
-        branchcode !== '' &&
-        employeeCode !== ''
-    );
-
-    document.getElementById('createtokenbtn').disabled = !isValid;
-    return isValid;
-}
-// Add direct event listeners without debouncing
-document.getElementById('clientCode').addEventListener('input', validateForm);
-document.getElementById('category').addEventListener('change', validateForm);
-document.getElementById('subCategory').addEventListener('change', validateForm);
-document.getElementById('subject').addEventListener('input', validateForm);
-quill.on('text-change', validateForm);
-
-// Initial validation
-validateForm();
+        // Initial validation
+        validateForm();
 
         const categorySelect = document.getElementById('category');
         const subCategorySelect = document.getElementById('subCategory');
         const fileUpload = document.getElementById('fileUpload');
         const ticketForm = document.getElementById('ticketForm');
         const successModal = document.getElementById('successModal');
-         const errorModal = document.getElementById('errorModal');
+        const errorModal = document.getElementById('errorModal');
         const closeModal = document.getElementById('closeModal');
         const closeModalerror = document.getElementById('closeModalerror');
         const searchClientCode = document.getElementById('searchClientCode');
@@ -658,7 +660,7 @@ validateForm();
 
 
 
-      
+
         // Fetch subcategories from API and initialize dropdowns
         const initializeDropdowns = async () => {
             try {
@@ -738,7 +740,7 @@ validateForm();
         });
 
         function switchTab(activeTab) {
-           
+
             // Reset all tabs
             Object.values(tabs).forEach(tab => {
                 tab.className = 'px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 focus:outline-none transition-colors duration-200';
@@ -794,8 +796,8 @@ validateForm();
         const uploadArea = fileUpload.parentElement.parentElement;
         const uploadedFiles = document.getElementById('uploadedFiles');
 
-// Global variable to store the single uploaded file
-let currentUploadedFile = null;
+        // Global variable to store the single uploaded file
+        let currentUploadedFile = null;
         uploadArea.addEventListener('click', () => fileUpload.click());
 
         uploadArea.addEventListener('dragover', (e) => {
@@ -813,11 +815,11 @@ let currentUploadedFile = null;
             uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
 
             const files = Array.from(e.dataTransfer.files);
-              if (files.length > 1) {
-        // alert("Only one file can be uploaded at a time.");
-        return;
-    }
-    handleFiles(files); 
+            if (files.length > 1) {
+                // alert("Only one file can be uploaded at a time.");
+                return;
+            }
+            handleFiles(files);
         });
 
         fileUpload.addEventListener('change', (e) => {
@@ -825,33 +827,33 @@ let currentUploadedFile = null;
             handleFiles(files);
         });
 
-     function handleFiles(files) {
-    if (files.length === 0) return;
+        function handleFiles(files) {
+            if (files.length === 0) return;
 
-    // Clear previous upload
-    uploadedFiles.innerHTML = "";
-    currentUploadedFile = null;
+            // Clear previous upload
+            uploadedFiles.innerHTML = "";
+            currentUploadedFile = null;
 
-    // Process the new file
-    const file = files[0]; // Take only the first file (in case multiple were selected)
-    const fileItem = createFileItem(file);
-    uploadedFiles.appendChild(fileItem);
-    uploadedFiles.classList.remove('hidden');
+            // Process the new file
+            const file = files[0]; // Take only the first file (in case multiple were selected)
+            const fileItem = createFileItem(file);
+            uploadedFiles.appendChild(fileItem);
+            uploadedFiles.classList.remove('hidden');
 
-    // Read file as base64 and store it globally
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const base64String = e.target.result.split(',')[1]; // Remove data URL prefix
-        currentUploadedFile = {
-            fileName: file.name,
-            fileContent: base64String,
-            fileSize: file.size,
-            fileType: file.type
-        };
-       // For debugging
-    };
-    reader.readAsDataURL(file);
-}
+            // Read file as base64 and store it globally
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const base64String = e.target.result.split(',')[1]; // Remove data URL prefix
+                currentUploadedFile = {
+                    fileName: file.name,
+                    fileContent: base64String,
+                    fileSize: file.size,
+                    fileType: file.type
+                };
+                // For debugging
+            };
+            reader.readAsDataURL(file);
+        }
 
 
         function createFileItem(file) {
@@ -893,93 +895,93 @@ let currentUploadedFile = null;
 
 
 
-    const createticket = async () => {
-    const apiurl = 'https://g1.gwcindia.in/ticket-api/create-ticket-br-emp.php';
-    const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
+        const createticket = async () => {
+            const apiurl = 'https://g1.gwcindia.in/ticket-api/create-ticket-br-emp.php';
+            const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
 
-    const categorieselementvalue = {
-        'account': '1',
-        'brokerage': '2',
-        'funds': '3',
-        'ipo': '4',
-        'margin': '5',
-        'mf': '6',
-        'onboarding': '7',
-        'orders': '8',
-        'portfolio': '9',
-        'research': '10',
-        'statements': '11'
-    };
+            const categorieselementvalue = {
+                'account': '1',
+                'brokerage': '2',
+                'funds': '3',
+                'ipo': '4',
+                'margin': '5',
+                'mf': '6',
+                'onboarding': '7',
+                'orders': '8',
+                'portfolio': '9',
+                'research': '10',
+                'statements': '11'
+            };
 
-    const dept = categorieselementvalue[document.getElementById('category').value];
-    const content = quill.root.innerHTML;
-    const posturlparams = new URLSearchParams(window.location.search);
+            const dept = categorieselementvalue[document.getElementById('category').value];
+            const content = quill.root.innerHTML;
+            const posturlparams = new URLSearchParams(window.location.search);
 
-    const formData = new FormData();
-    formData.append('department', dept);
-    formData.append('text', content);
-    formData.append('empcode', posturlparams.get('empCode'));
-    formData.append('subject', document.getElementById('subject').value);
-    formData.append('branchCode', posturlparams.get('branchcode'));
-    formData.append('subcat', document.getElementById('subCategory').value);
-    formData.append('clientCode', document.getElementById('clientCode').value);
+            const formData = new FormData();
+            formData.append('department', dept);
+            formData.append('text', content);
+            formData.append('empcode', posturlparams.get('empCode'));
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('branchCode', posturlparams.get('branchcode'));
+            formData.append('subcat', document.getElementById('subCategory').value);
+            formData.append('clientCode', document.getElementById('clientCode').value);
 
-    // Only append filename and attachment if a file exists
-    if (currentUploadedFile) {
-        formData.append('filename', currentUploadedFile.fileName);
-        formData.append('attachment', currentUploadedFile.fileContent);
-    }
+            // Only append filename and attachment if a file exists
+            if (currentUploadedFile) {
+                formData.append('filename', currentUploadedFile.fileName);
+                formData.append('attachment', currentUploadedFile.fileContent);
+            }
 
-    try {
-        const response = await fetch(apiurl, {
-            method: 'POST',
-            headers: {
-                'Authorization': header
-            },
-            body: formData
-        });
+            try {
+                const response = await fetch(apiurl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': header
+                    },
+                    body: formData
+                });
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
 
-        const dataval = await response.json();
-         if(dataval.status=='ok'){
-             // Show success modal
-            successModal.classList.remove('hidden');
-            successModal.querySelector('.transform').classList.remove('scale-95');
-            successModal.querySelector('.transform').classList.add('scale-100');
+                const dataval = await response.json();
+                if (dataval.status == 'ok') {
+                    // Show success modal
+                    successModal.classList.remove('hidden');
+                    successModal.querySelector('.transform').classList.remove('scale-95');
+                    successModal.querySelector('.transform').classList.add('scale-100');
 
-            document.getElementById('success').innerText=dataval.message
-            document.getElementById('ticketid').innerText=dataval.data.ticket_no
-         }
-         else if(dataval.status=='error'){
-           
-             errorModal.classList.remove('hidden');
-            errorModal.querySelector('.transform').classList.remove('scale-95');
-            errorModal.querySelector('.transform').classList.add('scale-100');
+                    document.getElementById('success').innerText = dataval.message
+                    document.getElementById('ticketid').innerText = dataval.data.ticket_no
+                }
+                else if (dataval.status == 'error') {
 
-            document.getElementById('error').innerText=dataval.message
-         }
-    } catch (error) {
-        console.error('Error:', error);
-       
-    }
-};
+                    errorModal.classList.remove('hidden');
+                    errorModal.querySelector('.transform').classList.remove('scale-95');
+                    errorModal.querySelector('.transform').classList.add('scale-100');
+
+                    document.getElementById('error').innerText = dataval.message
+                }
+            } catch (error) {
+                console.error('Error:', error);
+
+            }
+        };
         // Form submission
         ticketForm.addEventListener('submit', function (e) {
             e.preventDefault();
-createticket()
-            
-           
+            createticket()
 
-          
+
+
+
         });
 
         // Close modal
         closeModal.addEventListener('click', function () {
-           successModal.classList.add('hidden');
-          switchTab('viewTickets')
+            successModal.classList.add('hidden');
+            switchTab('viewTickets')
         });
 
         // Close modal when clicking outside
@@ -989,34 +991,61 @@ createticket()
             }
         });
 
-          closeModalerror.addEventListener('click', function(){
-             errorModal.classList.add('hidden');
-             document.getElementById('clientCode').value=''
-              document.getElementById('subject').value=''
-              document.getElementById('category').value=''
-              document.getElementById('subCategory').value=''
-              quill.root.innerHTML = '';
-               quill.setText('');
+        closeModalerror.addEventListener('click', function () {
+            errorModal.classList.add('hidden');
+            document.getElementById('clientCode').value = ''
+            document.getElementById('subject').value = ''
+            document.getElementById('category').value = ''
+            document.getElementById('subCategory').value = ''
+            quill.root.innerHTML = '';
+            quill.setText('');
 
-               fileUpload.value = '';
-    
-    // Clear the uploaded file display
-    uploadedFiles.innerHTML = "";
-    uploadedFiles.classList.add('hidden');
-    
-    // Clear the global file reference
-    currentUploadedFile = null;
-    
-    // Reset the upload area styling
-    uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
+            fileUpload.value = '';
+
+            // Clear the uploaded file display
+            uploadedFiles.innerHTML = "";
+            uploadedFiles.classList.add('hidden');
+
+            // Clear the global file reference
+            currentUploadedFile = null;
+
+            // Reset the upload area styling
+            uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
 
         })
 
-         closeModalerror.addEventListener('click', function (e) {
+        closeModalerror.addEventListener('click', function (e) {
             if (e.target === closeModalerror) {
                 closeModalerror.classList.add('hidden');
             }
         });
+
+
+        async function openTicket() {
+            try {
+                const ticketbranchparam = new URLSearchParams(window.location.search);
+                const branchCode = ticketbranchparam.get('branchcode');
+
+                const apiUrl = `https://g1.gwcindia.in/ticket-api/br-emp-tickets.php?ticket_status=open&createdBy=BRANCH-EMP&usercode=${branchCode}`;
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.status=='ok' && data.count>0){
+                    console.log("Fetched tickets:", data);
+                }
+                else if(data.count==0){
+                    console.log('no data')
+                }
+                
+            } catch (error) {
+                console.error("Error fetching tickets:", error);
+            }
+        }
+
+        openTicket()
 
         // Ticket Modal Functions
         function openTicketModal(ticketNumber, clientCode) {
