@@ -264,62 +264,8 @@
                                 </div>
                             </div>
 
-                            <!-- Client A000102 -->
-                            <div class="bg-gray-50 rounded-lg border border-gray-200">
-                                <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('client2')">
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-medium text-gray-700">A000102</span>
-                                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
-                                            id="arrow-client2">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="hidden border-t border-gray-200 bg-white" id="details-client2">
-                                    <div class="p-4">
-                                        <div class="flex items-center justify-between">
-                                            <span
-                                                class="text-gray-600 cursor-pointer hover:text-goodwill-blue transition-colors duration-200"
-                                                onclick="openTicketModal('#7084972', 'A000102')">#7084972</span>
-                                            <span
-                                                class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">OPEN</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
 
-                            <!-- Client A000103 -->
-                            <div class="bg-gray-50 rounded-lg border border-gray-200">
-                                <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('client3')">
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-medium text-gray-700">A000103</span>
-                                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
-                                            id="arrow-client3">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="hidden border-t border-gray-200 bg-white" id="details-client3">
-                                    <div class="p-4 space-y-3">
-                                        <div class="flex items-center justify-between">
-                                            <span
-                                                class="text-gray-600 cursor-pointer hover:text-goodwill-blue transition-colors duration-200"
-                                                onclick="openTicketModal('#7084972', 'A000103')">#7084972</span>
-                                            <span
-                                                class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">OPEN</span>
-                                        </div>
-                                        <div class="flex items-center justify-between">
-                                            <span
-                                                class="text-gray-600 cursor-pointer hover:text-goodwill-blue transition-colors duration-200"
-                                                onclick="openTicketModal('#7084973', 'A000103')">#7084973</span>
-                                            <span
-                                                class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">OPEN</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
                           
                         </div>
@@ -638,14 +584,15 @@ clientcodecheck.addEventListener('change', async function () {
             const response = await fetch(apiurl);
             const data = await response.json();
 
-            console.log('API response:', data);
+             const branchurlParams = new URLSearchParams(window.location.search);
 
-            if (!data || data.length === 0) {
-                clienterror.textContent = 'Invalid client code.';
-                isClientCodeValid = false;
-            } else {
+
+            if ( data.BranchCode === branchurlParams.get('branchcode')) {
                 clienterror.textContent = '';
                 isClientCodeValid = true;
+            } else {
+                clienterror.textContent = 'Invalid client code.';
+                isClientCodeValid = false;
             }
 
         } catch (error) {
