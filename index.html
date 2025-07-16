@@ -279,38 +279,39 @@
                         </div>
                     </div>
 
-                    <!-- Resolved Tickets Tab Content -->
+                   
+                                        <!-- Resolved Tickets Tab Content -->
                     <div id="resolvedTicketsTabContent" class="hidden">
                         <div class="text-center py-12 hidden" id="ticketclosedno">
-                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <h3 class="text-lg font-medium text-gray-900 mb-2">No Resolved Tickets</h3>
                             <p class="text-gray-500">Resolved tickets will appear here once they are completed.</p>
                         </div>
 
-                       <div class="mb-6">
-                           <div class="relative mb-4">
-                            <input 
-                                type="text" 
-                                id="searchClientCode" 
-                                placeholder="Search by Client Code"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                oninput="filterClientCode(this.value)"
-                            >
-                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
+                        <div class="w-full hidden" id="closedtickets">
+                            <div class="mb-6">
+                                <div class="relative mb-4">
+                                    <input 
+                                        type="text" 
+                                        id="searchClosedClientCode" 
+                                        placeholder="Search by Client Code"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                        oninput="closefilterClientCode(this.value)"
+                                    >
+                                    <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div id="clientCodeErrorclose" class="hidden p-4 mb-4 text-red-600 bg-red-50 rounded-lg">
+                                    ❌ Client Code not found!
+                                </div>
                             </div>
-                        </div>
-                        </div>
 
-
-                        <div class="w-full p-1" id="closeacordian" style="border: 1px solid red;">
-
+                            <div class="w-full p-1" id="closeaccordion"></div>
                         </div>
                     </div>
                 </div>
@@ -426,7 +427,7 @@
                 </div>
 
                 <!-- Reply Form -->
-                <div class="border-t pt-6">
+                <div class="border-t pt-6" id="closenonecontent">
                     <form id="replyForm" class="space-y-4">
 
                         <input type="text" name="" class="hidden" id="repclientcode">
@@ -772,11 +773,14 @@
         });
 
         function switchTab(activeTab) {
-
+         
             if (activeTab == 'viewTickets') {
                 openTicket()
             }
 
+             if (activeTab == 'resolvedTickets') {
+                closefetchdata()
+            }
             // Reset all tabs
             Object.values(tabs).forEach(tab => {
                 tab.className = 'px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 focus:outline-none transition-colors duration-200';
@@ -794,22 +798,7 @@
             tabContents[activeTab].classList.remove('hidden');
         }
 
-        // Search functionality
-        if (searchClientCode) {
-            searchClientCode.addEventListener('input', function () {
-                const searchTerm = this.value.toLowerCase();
-                const ticketItems = document.querySelectorAll('#ticketsList > div');
-
-                ticketItems.forEach(item => {
-                    const clientCode = item.querySelector('span').textContent.toLowerCase();
-                    if (clientCode.includes(searchTerm)) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        }
+   
 
 
 
@@ -1044,6 +1033,7 @@
 
         document.getElementById('replaybtn').disabled = true
         async function openTicket() {
+             document.getElementById('closenonecontent').classList.remove('hidden')
             try {
                 const ticketbranchparam = new URLSearchParams(window.location.search);
                 const branchCode = ticketbranchparam.get('branchcode');
@@ -1572,8 +1562,10 @@ function renderSingleAccordion(clientCode) {
 
 
     //    close section
+let closeticketMap = {};
 
-   async function closefetchdata() {
+async function closefetchdata() {
+    document.getElementById('closenonecontent').classList.add('hidden')
     const closeparams = new URLSearchParams(window.location.search);
     const branchCode = closeparams.get('branchcode');
 
@@ -1582,7 +1574,7 @@ function renderSingleAccordion(clientCode) {
         return;
     }
 
-    const apiurl = `https://g1.gwcindia.in/ticket-api/resolved-tickets.php?branchCode=${branchCode}&createdBy=BRANCH`;
+    const apiurl = `https://g1.gwcindia.in/ticket-api/br-emp-tickets.php?ticket_status=closed&createdBy=BRANCH-EMP&usercode=${branchCode}`;
     const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
 
     try {
@@ -1590,24 +1582,171 @@ function renderSingleAccordion(clientCode) {
             method: 'GET',
             headers: {
                 'Authorization': header,
-                'Accept': 'application/json',
             }
         });
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+ 
         const data = await response.json();
-        console.log('Resolved tickets:', data);
+        if (data.status == 'ok' && data.count > 0) {
 
-        // Process the data here (e.g., render it to the DOM)
+            document.getElementById('closedtickets').classList.remove('hidden');
+            document.getElementById('ticketclosedno').classList.add('hidden');
+            closeaccordianlist(data);
+        } else if (data.count == 0) {
+            document.getElementById('ticketclosedno').classList.remove('hidden');
+            document.getElementById('closedtickets').classList.add('hidden');
+        }
     } catch (error) {
         console.error('Error fetching resolved tickets:', error);
     }
 }
 
+function closeaccordianlist(datavalue) {
+    const tickets = datavalue.tickets;
 
+    // Group tickets by clientCode
+    closeticketMap = {};
+    tickets.forEach((item) => {
+        if (item.clientCode) {
+            if (!closeticketMap[item.clientCode]) {
+                closeticketMap[item.clientCode] = [];
+            }
+            closeticketMap[item.clientCode].push(item);
+        }
+    });
+
+    // Initial render (show all)
+    closefilterClientCode("");
+}
+
+function closetoggleTicketDetails(id) {
+    const details = document.getElementById(`closedetails-${id}`);
+    const arrow = document.getElementById(`closearrow-${id}`);
+    const isOpen = !details.classList.contains('hidden');
+
+    if (isOpen) {
+        details.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+    } else {
+        details.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+    }
+}
+
+function closefilterClientCode(searchTerm) {
+    const container = document.getElementById('closeaccordion');
+    const errorMsg = document.getElementById('clientCodeErrorclose');
+    searchTerm = searchTerm.trim().toUpperCase();
+
+    container.innerHTML = '';
+    errorMsg.classList.add('hidden');
+
+    if (searchTerm === "") {
+        closerenderAllAccordions();
+        return;
+    }
+
+    // Filter client codes that START WITH search term
+    const matchingClients = Object.keys(closeticketMap).filter(
+        clientCode => clientCode.startsWith(searchTerm)
+    );
+
+    if (matchingClients.length > 0) {
+        // Render matching clients as accordions
+        matchingClients.forEach(clientCode => {
+            closerenderClientAccordion(clientCode);
+        });
+    } else {
+        errorMsg.classList.remove('hidden');
+    }
+}
+
+function closerenderClientAccordion(clientCode) {
+    const container = document.getElementById('closeaccordion');
+    const clientTickets = closeticketMap[clientCode];
+    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+    
+    const ticketsHtml = clientTickets.map(ticket => `
+        <div class="p-4 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <span class="ml-2 text-gray-500 cursor-pointer"
+                      onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                    ${ticket.ticketNo}
+                </span>
+                <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
+            </div>
+        </div>
+    `).join('');
+
+    const accordionHtml = `
+        <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
+            <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-gray-700">${clientCode}</span>
+                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" 
+                         id="closearrow-${uniqueId}" 
+                         xmlns="http://www.w3.org/2000/svg" 
+                         fill="none" 
+                         viewBox="0 0 24 24" 
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </div>
+            <div class="hidden border-t border-gray-200 bg-white" id="closedetails-${uniqueId}">
+                ${ticketsHtml}
+            </div>
+        </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', accordionHtml);
+}
+
+function closerenderAllAccordions() {
+    const container = document.getElementById('closeaccordion');
+    container.innerHTML = '';
+
+    Object.entries(closeticketMap).forEach(([clientCode, clientTickets]) => {
+        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+        const detailsId = `closedetails-${uniqueId}`;
+        const arrowId = `closearrow-${uniqueId}`;
+
+        const ticketsHtml = clientTickets.map(ticket => `
+            <div class="p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="ml-2 text-gray-500 cursor-pointer"
+                              onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                            ${ticket.ticketNo}
+                        </span>
+                    </div>
+                    <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
+                </div>
+            </div>
+        `).join('');
+
+        const accordionHtml = `
+            <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
+                <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-gray-700">${clientCode}</span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
+                    ${ticketsHtml}
+                </div>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', accordionHtml);
+    });
+}
     
     </script>
 </body>
