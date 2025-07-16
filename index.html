@@ -281,7 +281,7 @@
 
                     <!-- Resolved Tickets Tab Content -->
                     <div id="resolvedTicketsTabContent" class="hidden">
-                        <div class="text-center py-12">
+                        <div class="text-center py-12 hidden" id="ticketclosedno">
                             <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -289,6 +289,28 @@
                             </svg>
                             <h3 class="text-lg font-medium text-gray-900 mb-2">No Resolved Tickets</h3>
                             <p class="text-gray-500">Resolved tickets will appear here once they are completed.</p>
+                        </div>
+
+                       <div class="mb-6">
+                           <div class="relative mb-4">
+                            <input 
+                                type="text" 
+                                id="searchClientCode" 
+                                placeholder="Search by Client Code"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                oninput="filterClientCode(this.value)"
+                            >
+                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        </div>
+
+
+                        <div class="w-full p-1" id="closeacordian" style="border: 1px solid red;">
+
                         </div>
                     </div>
                 </div>
@@ -1549,35 +1571,44 @@ function renderSingleAccordion(clientCode) {
 
 
 
-        // // Keyboard navigation for image viewer
-        // document.addEventListener('keydown', function (e) {
-        //     const modal = document.getElementById('imageViewerModal');
-        //     if (!modal.classList.contains('hidden')) {
-        //         switch (e.key) {
-        //             case 'Escape':
-        //                 closeImageViewer();
-        //                 break;
-        //             case 'ArrowLeft':
-        //                 previousImage();
-        //                 break;
-        //             case 'ArrowRight':
-        //                 nextImage();
-        //                 break;
-        //         }
-        //     }
-        // });
+    //    close section
 
-        // // Toolbar button functionality (basic implementation)
-        // document.querySelectorAll('[title]').forEach(button => {
-        //     if (button.type === 'button' && button.closest('.border-b')) {
-        //         button.addEventListener('click', function (e) {
-        //             e.preventDefault();
-        //             const title = this.getAttribute('title');
-        //             console.log(`${title} button clicked`);
-        //             // Here you would implement actual text formatting functionality
-        //         });
-        //     }
-        // });
+   async function closefetchdata() {
+    const closeparams = new URLSearchParams(window.location.search);
+    const branchCode = closeparams.get('branchcode');
+
+    if (!branchCode) {
+        console.error("branchcode parameter is missing in the URL");
+        return;
+    }
+
+    const apiurl = `https://g1.gwcindia.in/ticket-api/resolved-tickets.php?branchCode=${branchCode}&createdBy=BRANCH`;
+    const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
+
+    try {
+        const response = await fetch(apiurl, {
+            method: 'GET',
+            headers: {
+                'Authorization': header,
+                'Accept': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('Resolved tickets:', data);
+
+        // Process the data here (e.g., render it to the DOM)
+    } catch (error) {
+        console.error('Error fetching resolved tickets:', error);
+    }
+}
+
+
+    
     </script>
 </body>
 
