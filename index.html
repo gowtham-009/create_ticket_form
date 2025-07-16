@@ -41,7 +41,7 @@
             border: 1px solid #d1d5db;
             border-top: none;
             background-color: white;
-            min-height: 200px;
+            min-height: 150px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -136,10 +136,10 @@
                             </div>
                             <!-- Client Code -->
                             <div>
-                                <input type="text" id="clientCode" placeholder="Client Code"
+                                <input type="text" id="clientCode" placeholder="Client Code" 
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500">
 
-                                <span class="text-red-500 text-sm" id="invalidclientcode"> </span>
+                              
                             </div>
 
 
@@ -189,9 +189,9 @@
                             <!-- File Upload -->
                             <div>
                                 <div
-                                    class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-goodwill-blue transition-colors duration-200">
+                                    class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-goodwill-blue transition-colors duration-200">
                                     <div class="flex flex-col items-center">
-                                        <svg class="w-12 h-12 text-goodwill-blue mb-4" fill="none" stroke="currentColor"
+                                        <svg class="w-12 h-8 text-goodwill-blue mb-4" fill="none" stroke="currentColor"
                                             viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -204,13 +204,19 @@
                                 </div>
 
                                 <!-- Uploaded Files List -->
-                                <div id="uploadedFiles" class="mt-4 space-y-2 hidden">
+                                <div id="uploadedFiles" class="mt-4 space-y-1 hidden">
                                     <!-- Uploaded files will be displayed here -->
                                 </div>
                             </div>
 
+                            <div class="w-full h-14" >
+                                  <div class="w-full px-2 py-2 rounded-lg bg-red-100 text-red-500 hidden" id="invalidclientcode">
+                                    <p class="text-red-500 text-sm leading-4 text-center" > Could you please verify the mapping? The client code doesn't seem to be linked to your branch. </p>
+                                  </div>
+                            </div>
+
                             <!-- Submit Button -->
-                            <div class="pt-4">
+                            <div >
                                 <button type="submit" id="createtokenbtn"
                                     class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     disabled>
@@ -237,7 +243,7 @@
                             </div>
                         </div>
 
-                        <div id="noticket" class="w-full p-1 hidden" style="border: 2px solid red;">
+                        <div id="noticket" class="w-full p-1 hidden" >
                              <div class="text-center py-12">
                             <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24">
@@ -445,33 +451,12 @@
                     <p class="text-xs text-gray-300" id="imageSize">245 KB</p>
                 </div>
 
-                <!-- Navigation Arrows (for multiple images) -->
-                <button onclick="previousImage()"
-                    class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors duration-200 bg-black bg-opacity-50 rounded-full p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
-                        </path>
-                    </svg>
-                </button>
+              
 
-                <button onclick="nextImage()"
-                    class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors duration-200 bg-black bg-opacity-50 rounded-full p-2">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </button>
             </div>
 
-            <!-- Download Button -->
-            <button onclick="downloadImage()"
-                class="absolute top-4 left-4 text-white hover:text-gray-300 transition-colors duration-200 bg-black bg-opacity-50 rounded-lg px-4 py-2 flex items-center space-x-2">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                    </path>
-                </svg>
-                <span class="text-sm">Download</span>
-            </button>
+           
+            
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
@@ -576,7 +561,6 @@ const enc = clientEncryption(getCurrentDate());
                     const response = await fetch(apiurl,{
                         method:'GET',
                        
-
                     });
                     const data = await response.json();
 
@@ -584,20 +568,28 @@ const enc = clientEncryption(getCurrentDate());
 
 
                     if (data.BranchCode === branchurlParams.get('branchcode')) {
-                        clienterror.textContent = '';
+                        clienterror.classList.add('hidden')
                         isClientCodeValid = true;
+                         clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
+                         clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
                     } else {
-                        clienterror.textContent = 'Invalid client code.';
+                        clienterror.classList.remove('hidden');
                         isClientCodeValid = false;
+                          clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+                clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
                     }
 
                 } catch (error) {
-                    console.error('Error checking client code:', error);
-                    clienterror.textContent = 'Invalid client code.';
+                  
+                    clienterror.classList.remove('hidden');
+                       clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+                clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
                     isClientCodeValid = false;
                 }
             } else {
-                clienterror.textContent = 'Client code is required.';
+                clienterror.classList.remove('hidden');
+                    clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+                clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
                 isClientCodeValid = false;
             }
 
@@ -1079,7 +1071,7 @@ function accordianlist(datavalue) {
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
-                        <span class="font-medium text-gray-700">${clientCode} (${clientTickets.length} tickets)</span>
+                        <span class="font-medium text-gray-700">${clientCode} </span>
                         <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
@@ -1137,6 +1129,7 @@ function toggleTicketDetails(id) {
     button.className = ' text-blue-500  text-sm';
     button.onclick = function() {
        ticketviewimage(ticketNumber, clientCode)
+        modal.classList.add('hidden');
     };
     viewimage.appendChild(button);
 
@@ -1166,10 +1159,20 @@ async function ticketviewimage(ticketno, clientcode) {
         }
 
         const data = await response.json();
-        console.log('API Response:', data);
-        openImageViewer()
+     
+     const attachment = data.data[0]?.attachments[0]; // Safely get the attachment object
+const imgurl = attachment?.direct_frontend_url; // Get the URL if it exists
 
-        // Do something with the response data
+console.log("Image URL:", imgurl); // Log the actual URL value
+
+if (imgurl) {
+    alert('true');
+    openImageViewer(imgurl); // Pass the actual URL to the viewer
+} else {
+    const defaultImage = 'https://cdn-icons-png.flaticon.com/128/4067/4067419.png';
+    openImageViewer(defaultImage);
+}
+  
         return data;
     } catch (error) {
         console.error('Error fetching ticket view image:', error);
@@ -1233,18 +1236,18 @@ async function ticketviewimage(ticketno, clientcode) {
 
         
 
-        function openImageViewer() {
+        function openImageViewer(imageurl) {
           
             const modal = document.getElementById('imageViewerModal');
             const image = document.getElementById('viewerImage');
             const imageName = document.getElementById('imageName');
             const imageSize = document.getElementById('imageSize');
 
-            // Set image data
-            const currentImage = attachmentImages[currentImageIndex];
-            image.src = currentImage.src;
-            imageName.textContent = currentImage.name;
-            imageSize.textContent = currentImage.size;
+
+           
+            
+            image.src = imageurl;
+         
 
             // Show modal
             modal.classList.remove('hidden');
@@ -1261,49 +1264,11 @@ async function ticketviewimage(ticketno, clientcode) {
             document.body.style.overflow = 'auto';
         }
 
-        function previousImage() {
-            if (currentImageIndex > 0) {
-                currentImageIndex--;
-                updateViewerImage();
-            }
-        }
+     
 
-        function nextImage() {
-            if (currentImageIndex < attachmentImages.length - 1) {
-                currentImageIndex++;
-                updateViewerImage();
-            }
-        }
+       
 
-        function updateViewerImage() {
-            const image = document.getElementById('viewerImage');
-            const imageName = document.getElementById('imageName');
-            const imageSize = document.getElementById('imageSize');
-
-            const currentImage = attachmentImages[currentImageIndex];
-
-            // Fade out
-            image.style.opacity = '0';
-
-            setTimeout(() => {
-                image.src = currentImage.src;
-                imageName.textContent = currentImage.name;
-                imageSize.textContent = currentImage.size;
-
-                // Fade in
-                image.style.opacity = '1';
-            }, 150);
-        }
-
-        function downloadImage() {
-            const currentImage = attachmentImages[currentImageIndex];
-            const link = document.createElement('a');
-            link.href = currentImage.src;
-            link.download = currentImage.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+      
 
         // Close image viewer when clicking outside the image
         document.getElementById('imageViewerModal').addEventListener('click', function (e) {
