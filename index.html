@@ -236,25 +236,23 @@
                     <div id="viewTicketsTabContent" class="hidden">
                         <!-- Search Bar -->
                         <div class="mb-6">
-                           <div class="relative mb-4">
-                            <input 
-                                type="text" 
-                                id="searchClientCode" 
-                                placeholder="Search by Client Code"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                oninput="filterClientCode(this.value)"
-                            >
-                            <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
+                            <div class="relative mb-4">
+                                <input type="text" id="searchClientCode" placeholder="Search by Client Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    oninput="filterClientCode(this.value)">
+                                <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Error Message (Hidden by Default) -->
-                        <div id="clientCodeError" class="hidden p-4 mb-4 text-red-600 bg-red-50 rounded-lg">
-                            ❌ Client Code not found!
-                        </div>
+                            <!-- Error Message (Hidden by Default) -->
+                            <div id="clientCodeError" class="hidden p-4 mb-4 text-red-600 bg-red-50 rounded-lg">
+                                ❌ Client Code not found!
+                            </div>
                         </div>
 
                         <div id="noticket" class="w-full p-1 hidden">
@@ -279,12 +277,14 @@
                         </div>
                     </div>
 
-                   
-                                        <!-- Resolved Tickets Tab Content -->
+
+                    <!-- Resolved Tickets Tab Content -->
                     <div id="resolvedTicketsTabContent" class="hidden">
                         <div class="text-center py-12 hidden" id="ticketclosedno">
-                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                             <h3 class="text-lg font-medium text-gray-900 mb-2">No Resolved Tickets</h3>
                             <p class="text-gray-500">Resolved tickets will appear here once they are completed.</p>
@@ -293,20 +293,19 @@
                         <div class="w-full hidden" id="closedtickets">
                             <div class="mb-6">
                                 <div class="relative mb-4">
-                                    <input 
-                                        type="text" 
-                                        id="searchClosedClientCode" 
-                                        placeholder="Search by Client Code"
+                                    <input type="text" id="searchClosedClientCode" placeholder="Search by Client Code"
                                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                        oninput="closefilterClientCode(this.value)"
-                                    >
+                                        oninput="closefilterClientCode(this.value)">
                                     <div class="absolute right-3 top-1/2 transform -translate-y-1/2">
-                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                         </svg>
                                     </div>
                                 </div>
-                                <div id="clientCodeErrorclose" class="hidden p-4 mb-4 text-red-600 bg-red-50 rounded-lg">
+                                <div id="clientCodeErrorclose"
+                                    class="hidden p-4 mb-4 text-red-600 bg-red-50 rounded-lg">
                                     ❌ Client Code not found!
                                 </div>
                             </div>
@@ -383,26 +382,13 @@
             <!-- Modal Content -->
             <div class="p-6 space-y-6">
                 <!-- Original Message -->
-                <div class="bg-blue-50 rounded-lg p-4">
-                    <div class="flex items-start space-x-3">
-                        <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span class="text-blue-600 font-medium text-sm" id="modalClientCode">A</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between mb-2">
-                                <h3 class="font-medium text-gray-900">How to Open demat account ?</h3>
 
-                            </div>
-                            <div class="text-sm text-gray-600 mb-2">
-                                <span class="font-medium" id="modalClientFullCode"></span>
-                                <span class="text-gray-400 ml-2" id="modalTicketId"></span>
-                            </div>
-                            <div id="viewattached">
+                <div id="messagereplaytemp" class="w-full p-1" >
 
-                            </div>
-                        </div>
-                    </div>
                 </div>
+
+
+               
 
                 <!-- Support Response -->
                 <div class="bg-gray-50 rounded-lg p-4">
@@ -506,6 +492,10 @@
 
         </div>
     </div>
+
+
+
+    
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
@@ -773,12 +763,12 @@
         });
 
         function switchTab(activeTab) {
-         
+
             if (activeTab == 'viewTickets') {
                 openTicket()
             }
 
-             if (activeTab == 'resolvedTickets') {
+            if (activeTab == 'resolvedTickets') {
                 closefetchdata()
             }
             // Reset all tabs
@@ -798,7 +788,7 @@
             tabContents[activeTab].classList.remove('hidden');
         }
 
-   
+
 
 
 
@@ -1033,7 +1023,7 @@
 
         document.getElementById('replaybtn').disabled = true
         async function openTicket() {
-             document.getElementById('closenonecontent').classList.remove('hidden')
+            document.getElementById('closenonecontent').classList.remove('hidden')
             try {
                 const ticketbranchparam = new URLSearchParams(window.location.search);
                 const branchCode = ticketbranchparam.get('branchcode');
@@ -1064,24 +1054,24 @@
         openTicket()
 
         let ticketMap = {};
-        
-function accordianlist(datavalue) {
-    const tickets = datavalue.tickets;
 
-    // Group tickets by clientCode
-    ticketMap = {};
-    tickets.forEach((item) => {
-        if (item.clientCode) {
-            if (!ticketMap[item.clientCode]) {
-                ticketMap[item.clientCode] = [];
-            }
-            ticketMap[item.clientCode].push(item);
+        function accordianlist(datavalue) {
+            const tickets = datavalue.tickets;
+
+            // Group tickets by clientCode
+            ticketMap = {};
+            tickets.forEach((item) => {
+                if (item.clientCode) {
+                    if (!ticketMap[item.clientCode]) {
+                        ticketMap[item.clientCode] = [];
+                    }
+                    ticketMap[item.clientCode].push(item);
+                }
+            });
+
+            // Initial render (show all)
+            filterClientCode("");
         }
-    });
-
-    // Initial render (show all)
-    filterClientCode("");
-}
         function toggleTicketDetails(id) {
             const details = document.getElementById(`details-${id}`);
             const arrow = document.getElementById(`arrow-${id}`);
@@ -1096,40 +1086,40 @@ function accordianlist(datavalue) {
             }
         }
 
-function filterClientCode(searchTerm) {
-    const container = document.getElementById('ticketsList');
-    const errorMsg = document.getElementById('clientCodeError');
-    searchTerm = searchTerm.trim().toUpperCase();
+        function filterClientCode(searchTerm) {
+            const container = document.getElementById('ticketsList');
+            const errorMsg = document.getElementById('clientCodeError');
+            searchTerm = searchTerm.trim().toUpperCase();
 
-    container.innerHTML = '';
-    errorMsg.classList.add('hidden');
+            container.innerHTML = '';
+            errorMsg.classList.add('hidden');
 
-    if (searchTerm === "") {
-        renderAllAccordions();
-        return;
-    }
+            if (searchTerm === "") {
+                renderAllAccordions();
+                return;
+            }
 
-    // Filter client codes that START WITH search term
-    const matchingClients = Object.keys(ticketMap).filter(
-        clientCode => clientCode.startsWith(searchTerm)
-    );
+            // Filter client codes that START WITH search term
+            const matchingClients = Object.keys(ticketMap).filter(
+                clientCode => clientCode.startsWith(searchTerm)
+            );
 
-    if (matchingClients.length > 0) {
-        // Render matching clients as accordions
-        matchingClients.forEach(clientCode => {
-            renderClientAccordion(clientCode);
-        });
-    } else {
-        errorMsg.classList.remove('hidden');
-    }
-}
+            if (matchingClients.length > 0) {
+                // Render matching clients as accordions
+                matchingClients.forEach(clientCode => {
+                    renderClientAccordion(clientCode);
+                });
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
 
-function renderClientAccordion(clientCode) {
-    const container = document.getElementById('ticketsList');
-    const clientTickets = ticketMap[clientCode];
-    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-    
-    const ticketsHtml = clientTickets.map(ticket => `
+        function renderClientAccordion(clientCode) {
+            const container = document.getElementById('ticketsList');
+            const clientTickets = ticketMap[clientCode];
+            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+
+            const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="ml-2 text-gray-500 cursor-pointer"
@@ -1141,7 +1131,7 @@ function renderClientAccordion(clientCode) {
         </div>
     `).join('');
 
-    const accordionHtml = `
+            const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
@@ -1162,20 +1152,20 @@ function renderClientAccordion(clientCode) {
         </div>
     `;
 
-    container.insertAdjacentHTML('beforeend', accordionHtml);
-    container.classList.remove('hidden');
-}
-function renderAllAccordions() {
-    const container = document.getElementById('ticketsList');
-    container.innerHTML = '';
-    container.classList.remove('hidden');
+            container.insertAdjacentHTML('beforeend', accordionHtml);
+            container.classList.remove('hidden');
+        }
+        function renderAllAccordions() {
+            const container = document.getElementById('ticketsList');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
 
-    Object.entries(ticketMap).forEach(([clientCode, clientTickets]) => {
-        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-        const detailsId = `details-${uniqueId}`;
-        const arrowId = `arrow-${uniqueId}`;
+            Object.entries(ticketMap).forEach(([clientCode, clientTickets]) => {
+                const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+                const detailsId = `details-${uniqueId}`;
+                const arrowId = `arrow-${uniqueId}`;
 
-        const ticketsHtml = clientTickets.map(ticket => `
+                const ticketsHtml = clientTickets.map(ticket => `
             <div class="p-4 border-b border-gray-100">
                 <div class="flex items-center justify-between">
                     <div>
@@ -1189,7 +1179,7 @@ function renderAllAccordions() {
             </div>
         `).join('');
 
-        const accordionHtml = `
+                const accordionHtml = `
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
@@ -1205,21 +1195,21 @@ function renderAllAccordions() {
             </div>
         `;
 
-        container.insertAdjacentHTML('beforeend', accordionHtml);
-    });
-}
+                container.insertAdjacentHTML('beforeend', accordionHtml);
+            });
+        }
 
-function renderSingleAccordion(clientCode) {
-    const container = document.getElementById('ticketsList');
-    container.innerHTML = '';
-    container.classList.remove('hidden');
+        function renderSingleAccordion(clientCode) {
+            const container = document.getElementById('ticketsList');
+            container.innerHTML = '';
+            container.classList.remove('hidden');
 
-    const clientTickets = ticketMap[clientCode];
-    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-    const detailsId = `details-${uniqueId}`;
-    const arrowId = `arrow-${uniqueId}`;
+            const clientTickets = ticketMap[clientCode];
+            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+            const detailsId = `details-${uniqueId}`;
+            const arrowId = `arrow-${uniqueId}`;
 
-    const ticketsHtml = clientTickets.map(ticket => `
+            const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
             <div class="flex items-center justify-between">
                 <div>
@@ -1233,7 +1223,7 @@ function renderSingleAccordion(clientCode) {
         </div>
     `).join('');
 
-    const accordionHtml = `
+            const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
@@ -1249,11 +1239,14 @@ function renderSingleAccordion(clientCode) {
         </div>
     `;
 
-    container.insertAdjacentHTML('beforeend', accordionHtml);
-}
+            container.insertAdjacentHTML('beforeend', accordionHtml);
+        }
 
 
         function openTicketModal(ticketNumber, clientCode, date, time) {
+
+            ticketviewimage(ticketNumber, clientCode)
+
             const modal = document.getElementById('ticketModal');
             const modalTicketNumber = document.getElementById('modalTicketNumber');
             const modalClientCode = document.getElementById('modalClientCode');
@@ -1267,24 +1260,24 @@ function renderSingleAccordion(clientCode) {
 
             // Update modal content
             modalTicketNumber.textContent = ticketNumber;
-            modalClientCode.textContent = clientCode.charAt(0);
-            modalClientFullCode.textContent = clientCode;
-            modalTicketId.textContent = ticketNumber.replace('#', '');
+          //  modalClientCode.textContent = clientCode.charAt(0);
+            //modalClientFullCode.textContent = clientCode;
+           // modalTicketId.textContent = ticketNumber.replace('#', '');
             datec.textContent = date;
             timec.textContent = time;
 
             // Clear previous content inside viewimage
-            viewimage.innerHTML = '';
+           // viewimage.innerHTML = '';
 
             // Create a button and append to viewimage div
-            const button = document.createElement('button');
-            button.textContent = 'View Attachment';
-            button.className = ' text-blue-500  text-sm';
-            button.onclick = function () {
-                ticketviewimage(ticketNumber, clientCode)
-                modal.classList.add('hidden');
-            };
-            viewimage.appendChild(button);
+            // const button = document.createElement('button');
+            // button.textContent = 'View Attachment';
+            // button.className = ' text-blue-500  text-sm';
+            // button.onclick = function () {
+            //     ticketviewimage(ticketNumber, clientCode)
+            //     modal.classList.add('hidden');
+            // };
+            // viewimage.appendChild(button);
 
             // Show modal
             modal.classList.remove('hidden');
@@ -1326,23 +1319,98 @@ function renderSingleAccordion(clientCode) {
 
                 const data = await response.json();
 
-                const attachment = data.data[0]?.attachments[0]; // Safely get the attachment object
-                const imgurl = attachment?.direct_frontend_url; // Get the URL if it exists
-
-                console.log("Image URL:", imgurl); // Log the actual URL value
-
-                if (imgurl) {
-                 
-                    openImageViewer(imgurl); // Pass the actual URL to the viewer
-                } else {
-                    const defaultImage = 'https://cdn-icons-png.flaticon.com/128/4067/4067419.png';
-                    openImageViewer(defaultImage);
+                if (data.status == 'ok') {
+                    messagerender(data, clientcode, ticketno)
                 }
+
+             
 
                 return data;
             } catch (error) {
                 console.error('Error fetching ticket view image:', error);
             }
+        }
+
+        function messagerender(messagerender, clientcodev, ticketval) {
+            const ticketmessage = messagerender.data;
+            const messagediv = document.getElementById('messagereplaytemp');
+
+            // Clear existing messages
+            messagediv.innerHTML = '';
+
+            ticketmessage.forEach(item => {
+                const cardcolor = item.by; // 0 or 1
+                const hasAttachment = item.attachments && item.attachments.length > 0;
+                const attachmentUrl = hasAttachment ? item.attachments[0].direct_frontend_url : null;
+            const timestamp = item.created_at; // e.g., 1752663181
+
+
+// Convert seconds to milliseconds
+const dateObj = new Date(timestamp * 1000);
+
+
+// Format the date
+const formattedDate = dateObj.toLocaleString('en-IN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+});
+
+
+                
+                                // Create a container div for each message
+                const messageElement = document.createElement('div');
+                messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded';
+
+                // Conditionally set background color
+                if (cardcolor == 0) {
+                    messageElement.classList.add('bg-blue-300');
+                } else if (cardcolor == 1) {
+                    messageElement.classList.add('bg-blue-200');
+                }
+
+                const clientcodeint = clientcodev.charAt(0);
+
+                // Build the HTML with or without the attachment block
+                messageElement.innerHTML = `
+            <div class="w-full">
+                <div class="flex items-start space-x-3">
+                    <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-blue-600 font-medium text-md">${clientcodeint}</span>
+                    </div>
+                    <div class="flex-1 w-full" >
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-medium text-gray-900">${item.excerpt}</h3>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-2">
+                            <span class="font-medium">${clientcodev}</span>
+                            <span class="text-gray-400 ml-2">${ticketval}</span>
+                            <p>${item.text}</p>
+                        </div>
+                     
+                      ${attachmentUrl
+                        ? `<div class="mt-2">
+                <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-sm">
+                    View Attachment
+                </button>
+           </div>`
+                        : ''
+                    }
+
+                       <div class="w-full flex justify-end gap-2" >
+                            <p>${formattedDate}</p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+                messagediv.appendChild(messageElement);
+            });
         }
 
 
@@ -1368,7 +1436,7 @@ function renderSingleAccordion(clientCode) {
 
             replaysendData()
 
-            closeTicketModal();
+            // closeTicketModal();
         });
 
         // Reply file upload functionality
@@ -1463,7 +1531,7 @@ function renderSingleAccordion(clientCode) {
             return fileItem;
         }
         function openImageViewer(imageurl) {
-
+            document.getElementById('ticketModal').classList.add('hidden')
             const modal = document.getElementById('imageViewerModal');
             const image = document.getElementById('viewerImage');
             const imageName = document.getElementById('imageName');
@@ -1534,12 +1602,13 @@ function renderSingleAccordion(clientCode) {
                 const result = await response.json();
                 console.log('Reply sent response:', result);
                 if (result.status == 'ok') {
-                    successModal.classList.remove('hidden');
-                    successModal.querySelector('.transform').classList.remove('scale-95');
-                    successModal.querySelector('.transform').classList.add('scale-100');
+                    ticketviewimage( document.getElementById('repticketno').value, document.getElementById('repclientcode').value)
+                    // successModal.classList.remove('hidden');
+                    // successModal.querySelector('.transform').classList.remove('scale-95');
+                    // successModal.querySelector('.transform').classList.add('scale-100');
 
-                    document.getElementById('success').innerText = result.message
-                    document.getElementById('ticketid').innerText = result.data.ticket_no
+                    // document.getElementById('success').innerText = result.message
+                    // document.getElementById('ticketid').innerText = result.data.ticket_no
                 }
 
                 else if (result.status == 'error') {
@@ -1561,115 +1630,115 @@ function renderSingleAccordion(clientCode) {
 
 
 
-    //    close section
-let closeticketMap = {};
+        //    close section
+        let closeticketMap = {};
 
-async function closefetchdata() {
-    document.getElementById('closenonecontent').classList.add('hidden')
-    const closeparams = new URLSearchParams(window.location.search);
-    const branchCode = closeparams.get('branchcode');
+        async function closefetchdata() {
+            document.getElementById('closenonecontent').classList.add('hidden')
+            const closeparams = new URLSearchParams(window.location.search);
+            const branchCode = closeparams.get('branchcode');
 
-    if (!branchCode) {
-        console.error("branchcode parameter is missing in the URL");
-        return;
-    }
-
-    const apiurl = `https://g1.gwcindia.in/ticket-api/br-emp-tickets.php?ticket_status=closed&createdBy=BRANCH-EMP&usercode=${branchCode}`;
-    const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
-
-    try {
-        const response = await fetch(apiurl, {
-            method: 'GET',
-            headers: {
-                'Authorization': header,
+            if (!branchCode) {
+                console.error("branchcode parameter is missing in the URL");
+                return;
             }
-        });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
- 
-        const data = await response.json();
-        if (data.status == 'ok' && data.count > 0) {
+            const apiurl = `https://g1.gwcindia.in/ticket-api/br-emp-tickets.php?ticket_status=closed&createdBy=BRANCH-EMP&usercode=${branchCode}`;
+            const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
 
-            document.getElementById('closedtickets').classList.remove('hidden');
-            document.getElementById('ticketclosedno').classList.add('hidden');
-            closeaccordianlist(data);
-        } else if (data.count == 0) {
-            document.getElementById('ticketclosedno').classList.remove('hidden');
-            document.getElementById('closedtickets').classList.add('hidden');
-        }
-    } catch (error) {
-        console.error('Error fetching resolved tickets:', error);
-    }
-}
+            try {
+                const response = await fetch(apiurl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': header,
+                    }
+                });
 
-function closeaccordianlist(datavalue) {
-    const tickets = datavalue.tickets;
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
 
-    // Group tickets by clientCode
-    closeticketMap = {};
-    tickets.forEach((item) => {
-        if (item.clientCode) {
-            if (!closeticketMap[item.clientCode]) {
-                closeticketMap[item.clientCode] = [];
+                const data = await response.json();
+                if (data.status == 'ok' && data.count > 0) {
+
+                    document.getElementById('closedtickets').classList.remove('hidden');
+                    document.getElementById('ticketclosedno').classList.add('hidden');
+                    closeaccordianlist(data);
+                } else if (data.count == 0) {
+                    document.getElementById('ticketclosedno').classList.remove('hidden');
+                    document.getElementById('closedtickets').classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error fetching resolved tickets:', error);
             }
-            closeticketMap[item.clientCode].push(item);
         }
-    });
 
-    // Initial render (show all)
-    closefilterClientCode("");
-}
+        function closeaccordianlist(datavalue) {
+            const tickets = datavalue.tickets;
 
-function closetoggleTicketDetails(id) {
-    const details = document.getElementById(`closedetails-${id}`);
-    const arrow = document.getElementById(`closearrow-${id}`);
-    const isOpen = !details.classList.contains('hidden');
+            // Group tickets by clientCode
+            closeticketMap = {};
+            tickets.forEach((item) => {
+                if (item.clientCode) {
+                    if (!closeticketMap[item.clientCode]) {
+                        closeticketMap[item.clientCode] = [];
+                    }
+                    closeticketMap[item.clientCode].push(item);
+                }
+            });
 
-    if (isOpen) {
-        details.classList.add('hidden');
-        arrow.classList.remove('rotate-180');
-    } else {
-        details.classList.remove('hidden');
-        arrow.classList.add('rotate-180');
-    }
-}
+            // Initial render (show all)
+            closefilterClientCode("");
+        }
 
-function closefilterClientCode(searchTerm) {
-    const container = document.getElementById('closeaccordion');
-    const errorMsg = document.getElementById('clientCodeErrorclose');
-    searchTerm = searchTerm.trim().toUpperCase();
+        function closetoggleTicketDetails(id) {
+            const details = document.getElementById(`closedetails-${id}`);
+            const arrow = document.getElementById(`closearrow-${id}`);
+            const isOpen = !details.classList.contains('hidden');
 
-    container.innerHTML = '';
-    errorMsg.classList.add('hidden');
+            if (isOpen) {
+                details.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            } else {
+                details.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            }
+        }
 
-    if (searchTerm === "") {
-        closerenderAllAccordions();
-        return;
-    }
+        function closefilterClientCode(searchTerm) {
+            const container = document.getElementById('closeaccordion');
+            const errorMsg = document.getElementById('clientCodeErrorclose');
+            searchTerm = searchTerm.trim().toUpperCase();
 
-    // Filter client codes that START WITH search term
-    const matchingClients = Object.keys(closeticketMap).filter(
-        clientCode => clientCode.startsWith(searchTerm)
-    );
+            container.innerHTML = '';
+            errorMsg.classList.add('hidden');
 
-    if (matchingClients.length > 0) {
-        // Render matching clients as accordions
-        matchingClients.forEach(clientCode => {
-            closerenderClientAccordion(clientCode);
-        });
-    } else {
-        errorMsg.classList.remove('hidden');
-    }
-}
+            if (searchTerm === "") {
+                closerenderAllAccordions();
+                return;
+            }
 
-function closerenderClientAccordion(clientCode) {
-    const container = document.getElementById('closeaccordion');
-    const clientTickets = closeticketMap[clientCode];
-    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-    
-    const ticketsHtml = clientTickets.map(ticket => `
+            // Filter client codes that START WITH search term
+            const matchingClients = Object.keys(closeticketMap).filter(
+                clientCode => clientCode.startsWith(searchTerm)
+            );
+
+            if (matchingClients.length > 0) {
+                // Render matching clients as accordions
+                matchingClients.forEach(clientCode => {
+                    closerenderClientAccordion(clientCode);
+                });
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        function closerenderClientAccordion(clientCode) {
+            const container = document.getElementById('closeaccordion');
+            const clientTickets = closeticketMap[clientCode];
+            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+
+            const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="ml-2 text-gray-500 cursor-pointer"
@@ -1679,9 +1748,9 @@ function closerenderClientAccordion(clientCode) {
                 <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
             </div>
         </div>
-    `).join('');
+      `).join('');
 
-    const accordionHtml = `
+            const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
@@ -1702,19 +1771,19 @@ function closerenderClientAccordion(clientCode) {
         </div>
     `;
 
-    container.insertAdjacentHTML('beforeend', accordionHtml);
-}
+            container.insertAdjacentHTML('beforeend', accordionHtml);
+        }
 
-function closerenderAllAccordions() {
-    const container = document.getElementById('closeaccordion');
-    container.innerHTML = '';
+        function closerenderAllAccordions() {
+            const container = document.getElementById('closeaccordion');
+            container.innerHTML = '';
 
-    Object.entries(closeticketMap).forEach(([clientCode, clientTickets]) => {
-        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-        const detailsId = `closedetails-${uniqueId}`;
-        const arrowId = `closearrow-${uniqueId}`;
+            Object.entries(closeticketMap).forEach(([clientCode, clientTickets]) => {
+                const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+                const detailsId = `closedetails-${uniqueId}`;
+                const arrowId = `closearrow-${uniqueId}`;
 
-        const ticketsHtml = clientTickets.map(ticket => `
+                const ticketsHtml = clientTickets.map(ticket => `
             <div class="p-4 border-b border-gray-100">
                 <div class="flex items-center justify-between">
                     <div>
@@ -1728,7 +1797,7 @@ function closerenderAllAccordions() {
             </div>
         `).join('');
 
-        const accordionHtml = `
+                const accordionHtml = `
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
@@ -1744,10 +1813,10 @@ function closerenderAllAccordions() {
             </div>
         `;
 
-        container.insertAdjacentHTML('beforeend', accordionHtml);
-    });
-}
-    
+                container.insertAdjacentHTML('beforeend', accordionHtml);
+            });
+        }
+
     </script>
 </body>
 
