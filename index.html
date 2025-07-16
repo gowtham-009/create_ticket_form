@@ -237,33 +237,21 @@
                             </div>
                         </div>
 
+                        <div id="noticket" class="w-full p-1 hidden" style="border: 2px solid red;">
+                             <div class="text-center py-12">
+                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No Resolved Tickets</h3>
+                            <p class="text-gray-500">Resolved tickets will appear here once they are completed.</p>
+                        </div>
+                        </div>
                         <!-- Tickets List -->
-                        <div class="space-y-4" id="ticketsList">
-                            <!-- Client A000101 -->
-                            <div class="bg-gray-50 rounded-lg border border-gray-200">
-                                <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('client1')">
-                                    <div class="flex items-center justify-between">
-                                        <span class="font-medium text-gray-700">A000101</span>
-                                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
-                                            id="arrow-client1">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                                stroke-width="2" d="M19 9l-7 7-7-7" />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="hidden border-t border-gray-200 bg-white" id="details-client1">
-                                    <div class="p-4">
-                                        <div class="flex items-center justify-between">
-                                            <span
-                                                class="text-gray-600 cursor-pointer hover:text-goodwill-blue transition-colors duration-200"
-                                                onclick="openTicketModal('#7084972', 'A000101')">#7084972</span>
-                                            <span
-                                                class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">OPEN</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div  class="space-y-4 hidden" id="ticketsList">
+                          
+                          
 
 
 
@@ -360,14 +348,15 @@
                         <div class="flex-1">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="font-medium text-gray-900">How to Open demat account ?</h3>
-                                <span class="text-xs text-gray-500">15/7/2025 10:11 AM</span>
+                               
                             </div>
                             <div class="text-sm text-gray-600 mb-2">
-                                <span class="font-medium" id="modalClientFullCode">A000101</span>
-                                <span class="text-gray-400 ml-2" id="modalTicketId">7084972</span>
+                                <span class="font-medium" id="modalClientFullCode"></span>
+                                <span class="text-gray-400 ml-2" id="modalTicketId"></span>
                             </div>
-                            <p class="text-sm text-blue-600 cursor-pointer hover:underline" onclick="openImageViewer()">
-                                View Attachment</p>
+                           <div id="viewattached">
+
+                           </div>
                         </div>
                     </div>
                 </div>
@@ -388,7 +377,7 @@
                             <div class="bg-white rounded p-3 mb-2">
                                 <p class="text-sm text-gray-700">Your ticket has been created successfully. Our support
                                     team will get back to you in 24-48</p>
-                                <span class="text-xs text-gray-500 mt-2 block">15/7/2025 10:11 AM</span>
+                                 <p class="text-xs text-gray-500"><span id="date"></span>  <span id="time"></span></p>
                             </div>
                         </div>
                     </div>
@@ -397,67 +386,13 @@
                 <!-- Reply Form -->
                 <div class="border-t pt-6">
                     <form id="replyForm" class="space-y-4">
-                        <!-- Reply Toolbar -->
-                        <div class="border border-gray-300 rounded-lg">
-                            <div
-                                class="flex items-center space-x-1 p-2 border-b border-gray-200 bg-gray-50 rounded-t-lg">
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Bold">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M3 4a1 1 0 011-1h6a4 4 0 014 4v1a4 4 0 01-4 4H6v2h4a1 1 0 110 2H4a1 1 0 01-1-1V4z" />
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Italic">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M8 1a1 1 0 011 1v1h2a1 1 0 110 2h-1l-2 8h1a1 1 0 110 2H7a1 1 0 01-1-1v-1H4a1 1 0 110-2h1l2-8H6a1 1 0 110-2h2V2a1 1 0 011-1z" />
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Underline">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M4 18a1 1 0 001 1h10a1 1 0 100-2H5a1 1 0 00-1 1zM3 7a4 4 0 018 0v4a4 4 0 01-8 0V7z" />
-                                    </svg>
-                                </button>
-                                <div class="w-px h-6 bg-gray-300 mx-1"></div>
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Bullet List">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M3 4a1 1 0 000 2h14a1 1 0 100-2H3zM3 8a1 1 0 000 2h14a1 1 0 100-2H3zM3 12a1 1 0 000 2h14a1 1 0 100-2H3z" />
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Numbered List">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M3 4a1 1 0 000 2h14a1 1 0 100-2H3zM3 8a1 1 0 000 2h14a1 1 0 100-2H3zM3 12a1 1 0 000 2h14a1 1 0 100-2H3z" />
-                                    </svg>
-                                </button>
-                                <button type="button"
-                                    class="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-200 rounded transition-colors duration-200"
-                                    title="Link">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                        <path
-                                            d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5z" />
-                                        <path
-                                            d="M7.414 15.414a2 2 0 01-2.828-2.828l3-3a2 2 0 012.828 0 1 1 0 001.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <textarea id="replyMessage" rows="4" placeholder="Describe your issue in detail..."
-                                class="w-full px-4 py-3 border-0 rounded-b-lg resize-none focus:outline-none text-gray-900 placeholder-gray-500"
-                                required></textarea>
-                        </div>
+                       
+                         <div class="full mx-auto">
+                                <div id="editor2">
 
+
+                                </div>
+                            </div>
                         <!-- File Upload for Reply -->
                         <div
                             class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-goodwill-blue transition-colors duration-200">
@@ -540,6 +475,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
 
         window.onload = function () {
@@ -570,7 +506,60 @@
                 ]
             }
         });
+
+
+        const quill2 = new Quill('#editor2', {
+            theme: 'snow',
+
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+
+
+
+                    ['link']
+                ]
+            }
+        });
+
         document.getElementById('createtokenbtn').disabled = true;
+        
+function clientEncryption(input) {
+    const secretKey = 'J0E';
+    const secretIv = 'rLv';
+
+    // Get 16 bytes from SHA256 for key and IV
+    const key = CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(secretKey)).words.slice(0, 4); // 4 words = 16 bytes
+    const iv  = CryptoJS.SHA256(CryptoJS.enc.Utf8.parse(secretIv)).words.slice(0, 4);
+
+    const keyWA = CryptoJS.lib.WordArray.create(key, 16);
+    const ivWA  = CryptoJS.lib.WordArray.create(iv, 16);
+
+    const encrypted = CryptoJS.AES.encrypt(input, keyWA, {
+        iv: ivWA,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+
+    // Return only base64 of ciphertext (like PHP with OPENSSL_RAW_DATA)
+    return CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
+}
+
+// Get current date in yyyy-mm-dd format
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Use it with your encryption function
+const enc = clientEncryption(getCurrentDate());
+
 
 
         let isClientCodeValid = false;
@@ -578,12 +567,17 @@
         clientcodecheck.addEventListener('change', async function () {
             const clientCode = clientcodecheck.value.trim();
             const clienterror = document.getElementById('invalidclientcode');
-
+            const formData=new FormData
+            formData.append('ticket', enc)
             if (clientCode) {
                 try {
-                    const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=cEVMQTFzeXorS3FLZk42UEhMVGh1UT09&cid=${clientCode}`;
+                    const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=${encodeURIComponent(enc)}&ticket=${enc}&cid=${clientCode}`;
 
-                    const response = await fetch(apiurl);
+                    const response = await fetch(apiurl,{
+                        method:'GET',
+                       
+
+                    });
                     const data = await response.json();
 
                     const branchurlParams = new URLSearchParams(window.location.search);
@@ -741,6 +735,10 @@
 
         function switchTab(activeTab) {
 
+            if(activeTab=='viewTickets'){
+                openTicket()
+            }
+
             // Reset all tabs
             Object.values(tabs).forEach(tab => {
                 tab.className = 'px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 focus:outline-none transition-colors duration-200';
@@ -756,20 +754,6 @@
 
             // Show active tab content
             tabContents[activeTab].classList.remove('hidden');
-        }
-
-        // Toggle ticket details function
-        function toggleTicketDetails(clientId) {
-            const details = document.getElementById(`details-${clientId}`);
-            const arrow = document.getElementById(`arrow-${clientId}`);
-
-            if (details.classList.contains('hidden')) {
-                details.classList.remove('hidden');
-                arrow.style.transform = 'rotate(180deg)';
-            } else {
-                details.classList.add('hidden');
-                arrow.style.transform = 'rotate(0deg)';
-            }
         }
 
         // Search functionality
@@ -1034,10 +1018,14 @@
 
                 const data = await response.json();
                 if (data.status=='ok' && data.count>0){
-                    console.log("Fetched tickets:", data);
+                   
+                    document.getElementById('ticketsList').classList.remove('hidden')
+
+                    accordianlist(data)
                 }
                 else if(data.count==0){
-                    console.log('no data')
+                 
+                    document.getElementById('noticket').classList.remove('hidden')
                 }
                 
             } catch (error) {
@@ -1047,27 +1035,147 @@
 
         openTicket()
 
-        // Ticket Modal Functions
-        function openTicketModal(ticketNumber, clientCode) {
-            const modal = document.getElementById('ticketModal');
-            const modalTicketNumber = document.getElementById('modalTicketNumber');
-            const modalClientCode = document.getElementById('modalClientCode');
-            const modalClientFullCode = document.getElementById('modalClientFullCode');
-            const modalTicketId = document.getElementById('modalTicketId');
+function accordianlist(datavalue) {
+    const tickets = datavalue.tickets;
 
-            // Update modal content
-            modalTicketNumber.textContent = ticketNumber;
-            modalClientCode.textContent = clientCode.charAt(0);
-            modalClientFullCode.textContent = clientCode;
-            modalTicketId.textContent = ticketNumber.replace('#', '');
-
-            // Show modal
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.querySelector('.transform').classList.remove('scale-95');
-                modal.querySelector('.transform').classList.add('scale-100');
-            }, 10);
+    // Group tickets by clientCode
+    const ticketMap = {};
+    tickets.forEach((item) => {
+        if (item.clientCode) {
+            if (!ticketMap[item.clientCode]) {
+                ticketMap[item.clientCode] = [];
+            }
+            ticketMap[item.clientCode].push(item);
         }
+    });
+
+    // Insert inside #ticketsList
+    const container = document.getElementById('ticketsList');
+    container.innerHTML = '';
+    container.classList.remove('hidden');
+
+    // Create accordion items
+    Object.entries(ticketMap).forEach(([clientCode, clientTickets]) => {
+        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+        const detailsId = `details-${uniqueId}`;
+        const arrowId = `arrow-${uniqueId}`;
+
+       const ticketsHtml = clientTickets.map(ticket => `
+    <div class="p-4 border-b border-gray-100">
+        <div class="flex items-center justify-between">
+            <div>
+              
+                <span class="ml-2 text-gray-500 cursor-pointer "
+                      onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                    ${ticket.ticketNo}
+                </span>
+            </div>
+            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
+        </div>
+    </div>
+`).join('');
+
+        const accordionHtml = `
+            <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
+                <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-gray-700">${clientCode} (${clientTickets.length} tickets)</span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
+                    ${ticketsHtml}
+                </div>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', accordionHtml);
+    });
+}
+
+function toggleTicketDetails(id) {
+    const details = document.getElementById(`details-${id}`);
+    const arrow = document.getElementById(`arrow-${id}`);
+    const isOpen = !details.classList.contains('hidden');
+
+    if (isOpen) {
+        details.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+    } else {
+        details.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+    }
+}
+
+
+     function openTicketModal(ticketNumber, clientCode, date, time) {
+    const modal = document.getElementById('ticketModal');
+    const modalTicketNumber = document.getElementById('modalTicketNumber');
+    const modalClientCode = document.getElementById('modalClientCode');
+    const modalClientFullCode = document.getElementById('modalClientFullCode');
+    const modalTicketId = document.getElementById('modalTicketId');
+    const datec = document.getElementById('date');
+    const timec = document.getElementById('time');
+    const viewimage = document.getElementById('viewattached');
+
+    // Update modal content
+    modalTicketNumber.textContent = ticketNumber;
+    modalClientCode.textContent = clientCode.charAt(0);
+    modalClientFullCode.textContent = clientCode;
+    modalTicketId.textContent = ticketNumber.replace('#', '');
+    datec.textContent = date;
+    timec.textContent = time;
+
+    // Clear previous content inside viewimage
+    viewimage.innerHTML = '';
+
+    // Create a button and append to viewimage div
+    const button = document.createElement('button');
+    button.textContent = 'View Attachment';
+    button.className = ' text-blue-500  text-sm';
+    button.onclick = function() {
+       ticketviewimage(ticketNumber, clientCode)
+    };
+    viewimage.appendChild(button);
+
+    // Show modal
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.querySelector('.transform').classList.remove('scale-95');
+        modal.querySelector('.transform').classList.add('scale-100');
+    }, 10);
+}
+
+
+async function ticketviewimage(ticketno, clientcode) {
+    const apiurl = 'https://g1.gwcindia.in/ticket-api/get-ticket-status-messages.php';
+    const formData = new FormData();
+    formData.append('ticket_no', ticketno);
+    formData.append('clientcode', clientcode);
+
+    try {
+        const response = await fetch(apiurl, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('API Response:', data);
+        openImageViewer()
+
+        // Do something with the response data
+        return data;
+    } catch (error) {
+        console.error('Error fetching ticket view image:', error);
+    }
+}
+
 
         function closeTicketModal() {
             const modal = document.getElementById('ticketModal');
@@ -1123,28 +1231,10 @@
             console.log('Reply files uploaded:', files);
         });
 
-        // Image Viewer Functions
-        let currentImageIndex = 0;
-        let attachmentImages = [
-            {
-                src: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
-                name: 'image_02.png',
-                size: '245 KB'
-            },
-            {
-                src: 'https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
-                name: 'document_scan.jpg',
-                size: '512 KB'
-            },
-            {
-                src: 'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
-                name: 'form_filled.png',
-                size: '189 KB'
-            }
-        ];
+        
 
-        function openImageViewer(imageIndex = 0) {
-            currentImageIndex = imageIndex;
+        function openImageViewer() {
+          
             const modal = document.getElementById('imageViewerModal');
             const image = document.getElementById('viewerImage');
             const imageName = document.getElementById('imageName');
