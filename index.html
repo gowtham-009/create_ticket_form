@@ -763,7 +763,17 @@ clientcodecheck.addEventListener('blur', async function () {
         });
 
         function switchTab(activeTab) {
+            console.log(activeTab)
+            if(activeTab=='create'){
+                document.getElementById('clientCode').value=''
+                 document.getElementById('category').value=''
+                 document.getElementById('subCategory').value=''
+                 document.getElementById('subject').value=''
+                   quill.root.innerHTML = '';
+            quill.setText('');
 
+            clearFileUpload()
+            }
             if (activeTab == 'viewTickets') {
                 openTicket()
             }
@@ -893,7 +903,17 @@ clientcodecheck.addEventListener('blur', async function () {
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
 
-
+ function clearFileUpload() {
+    // Clear the file input value
+    document.getElementById('fileUpload').value = '';
+    
+    // Clear the displayed files
+    uploadedFiles.innerHTML = "";
+    uploadedFiles.classList.add('hidden');
+    
+    // Reset the current file variable
+    currentUploadedFile = null;
+}
 
 
         const createticket = async () => {
@@ -1002,7 +1022,7 @@ clientcodecheck.addEventListener('blur', async function () {
             quill.root.innerHTML = '';
             quill.setText('');
 
-            fileUpload.value = '';
+          clearFileUpload()
 
             // Clear the uploaded file display
             uploadedFiles.innerHTML = "";
@@ -1654,8 +1674,8 @@ function messagerender(messagerender, clientcodev, ticketval) {
                 if (result.status == 'ok') {
                        quill2.root.innerHTML = '';
                        quill2.setText('');
-clearReplyFileUpload()
-                    ticketviewimage( document.getElementById('repticketno').value, document.getElementById('repclientcode').value)
+                        clearReplyFileUpload()
+                         ticketviewimage( document.getElementById('repticketno').value, document.getElementById('repclientcode').value)
                   
                 }
 
