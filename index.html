@@ -86,6 +86,14 @@
         .ql-editor.ql-blank::before {
             content: attr(data-placeholder);
         }
+        @keyframes progress {
+  0% { width: 0; margin-left: 0; }
+  50% { width: 100%; margin-left: 0; }
+  100% { width: 0; margin-left: 100%; }
+}
+.animate-progress {
+  animation: progress 2s linear infinite;
+}
     </style>
 </head>
 
@@ -334,7 +342,7 @@
 
                 <button id="closeModal"
                     class="bg-goodwill-blue mt-2 text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
-                    Close
+                    Ok
                 </button>
             </div>
         </div>
@@ -355,15 +363,16 @@
 
                 <button id="closeModalerror"
                     class="bg-goodwill-blue text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
-                    Close
+                    Ok
                 </button>
             </div>
         </div>
     </div>
     <!-- Ticket Details Modal -->
     <div id="ticketModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden p-4">
-        <div
-            class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95">
+        
+        <div 
+            class="bg-white  rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95">
             <!-- Modal Header -->
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center justify-between">
@@ -375,13 +384,16 @@
                                     d="M15 19l-7-7 7-7"></path>
                             </svg>
                         </button>
-                        <h2 class="text-lg font-semibold text-gray-900" id="modalTicketNumber">#7084972</h2>
+                        <h2 class="text-lg font-semibold text-gray-900" id="modalTicketNumber"></h2>
                     </div>
                 </div>
             </div>
-
-            <!-- Modal Content -->
-            <div class="p-6 space-y-6">
+       
+            <div class="w-full flex justify-center px-3 py-3">
+                <div id="loading" class="w-14 h-14 hidden border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <!-- Modal Content  -->
+            <div class="p-6 space-y-6 " id="incontentmodel">
                 <!-- Original Message -->
 
                 <div id="messagereplaytemp" class="w-full p-1" >
@@ -391,29 +403,9 @@
 
                
 
-                <!-- Support Response -->
-                <div class="bg-gray-50 rounded-lg p-4">
-                    <div class="flex items-start space-x-3">
-                        <div
-                            class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                            <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between mb-2">
-                                <h3 class="font-medium text-gray-900">Support</h3>
-                            </div>
-                            <div class="bg-white rounded p-3 mb-2">
-                                <p class="text-sm text-gray-700">Your ticket has been created successfully. Our support
-                                    team will get back to you in 24-48</p>
-                                <p class="text-xs text-gray-500"><span id="date"></span> <span id="time"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
 
-                <div class="w-full mt-2" id="revokecontainer">
+                <div class="w-full mt-2 flex gap-2" id="revokecontainer">
 
                 </div>
 
@@ -929,6 +921,7 @@ clientcodecheck.addEventListener('blur', async function () {
             const formData = new FormData();
             formData.append('department', dept);
             formData.append('text', content);
+            formData.append('branchName',posturlparams.get('branchname'))
             formData.append('empcode', posturlparams.get('empCode'));
             formData.append('subject', document.getElementById('subject').value);
             formData.append('branchCode', posturlparams.get('branchcode'));
@@ -1030,6 +1023,7 @@ clientcodecheck.addEventListener('blur', async function () {
         });
 
         document.getElementById('replaybtn').disabled = true
+        let subject
         async function openTicket() {
             document.getElementById('closenonecontent').classList.remove('hidden')
             document.getElementById('revokecontainer').classList.add('hidden')
@@ -1047,8 +1041,10 @@ clientcodecheck.addEventListener('blur', async function () {
                 if (data.status == 'ok' && data.count > 0) {
                 
                     document.getElementById('ticketsList').classList.remove('hidden')
-
+                   
+                    subject=data.tickets
                     accordianlist(data)
+                   
                 }
                 else if (data.count == 0) {
 
@@ -1096,6 +1092,7 @@ clientcodecheck.addEventListener('blur', async function () {
         }
 
         function filterClientCode(searchTerm) {
+           
             const container = document.getElementById('ticketsList');
             const errorMsg = document.getElementById('clientCodeError');
             searchTerm = searchTerm.trim().toUpperCase();
@@ -1113,6 +1110,8 @@ clientcodecheck.addEventListener('blur', async function () {
                 clientCode => clientCode.startsWith(searchTerm)
             );
 
+            
+
             if (matchingClients.length > 0) {
                 // Render matching clients as accordions
                 matchingClients.forEach(clientCode => {
@@ -1124,8 +1123,10 @@ clientcodecheck.addEventListener('blur', async function () {
         }
 
         function renderClientAccordion(clientCode) {
+         
             const container = document.getElementById('ticketsList');
             const clientTickets = ticketMap[clientCode];
+           
             const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
 
             const ticketsHtml = clientTickets.map(ticket => `
@@ -1258,17 +1259,13 @@ clientcodecheck.addEventListener('blur', async function () {
             const modalClientCode = document.getElementById('modalClientCode');
             const modalClientFullCode = document.getElementById('modalClientFullCode');
             const modalTicketId = document.getElementById('modalTicketId');
-            const datec = document.getElementById('date');
-            const timec = document.getElementById('time');
             const viewimage = document.getElementById('viewattached');
             document.getElementById('repclientcode').value = clientCode
             document.getElementById('repticketno').value = ticketNumber
 
-            // Update modal content
             modalTicketNumber.textContent ='#'+ ticketNumber;
      
-            datec.textContent = date;
-            timec.textContent = time;
+            
 
         
             modal.classList.remove('hidden');
@@ -1293,6 +1290,9 @@ clientcodecheck.addEventListener('blur', async function () {
         replayvalidateForm();
 
         async function ticketviewimage(ticketno, clientcode) {
+              document.getElementById('loading').classList.remove('hidden')
+            document.getElementById('incontentmodel').classList.add('hidden')
+
             const apiurl = 'https://g1.gwcindia.in/ticket-api/get-ticket-status-messages.php';
             const formData = new FormData();
             formData.append('ticket_no', ticketno);
@@ -1312,6 +1312,9 @@ clientcodecheck.addEventListener('blur', async function () {
 
                 if (data.status == 'ok') {
                     messagerender(data, clientcode, ticketno)
+                    document.getElementById('loading').classList.add('hidden')
+                    document.getElementById('incontentmodel').classList.remove('hidden')
+
                 }
 
              
@@ -1322,87 +1325,133 @@ clientcodecheck.addEventListener('blur', async function () {
             }
         }
 
-        function messagerender(messagerender, clientcodev, ticketval) {
-            const ticketmessage = messagerender.data;
-            const messagediv = document.getElementById('messagereplaytemp');
+function messagerender(messagerender, clientcodev, ticketval) {
+    const mysubject = subject; // subject should be an array of objects
 
-            // Clear existing messages
-            messagediv.innerHTML = '';
+    const matched = mysubject.find(item =>
+        item.ticketNo && item.ticketNo.includes(ticketval)
+    );
 
-            ticketmessage.forEach(item => {
-                const cardcolor = item.by; // 0 or 1
-                const hasAttachment = item.attachments && item.attachments.length > 0;
-                const attachmentUrl = hasAttachment ? item.attachments[0].direct_frontend_url : null;
-            const timestamp = item.created_at; // e.g., 1752663181
+    if (matched) {
+        // Extract last part after last `#` from the `text` field
+        var lastText = matched.subject?.split('#').pop().trim() || '';
+    } else {
+        console.log("❌ No match found for ticketval:", ticketval);
+    }
 
+    const ticketmessage = messagerender.data;
+    const messagediv = document.getElementById('messagereplaytemp');
+    messagediv.innerHTML = ''; // Clear previous content
 
-// Convert seconds to milliseconds
-const dateObj = new Date(timestamp * 1000);
+    ticketmessage.forEach((item) => {
+        if (
+            !item ||
+            (!item.text && (!item.attachments || item.attachments.length === 0)) ||
+            typeof item.created_at === 'undefined'
+        ) {
+            return;
+        }
 
+        const cardcolor = item.by;
+        const hasAttachment = item.attachments && item.attachments.length > 0;
+        const attachmentUrl = hasAttachment ? item.attachments[0].direct_frontend_url : null;
+        const timestamp = item.created_at;
 
-// Format the date
-const formattedDate = dateObj.toLocaleString('en-IN', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-});
+        const textval = item.excerpt;
+        const textexpert = textval.split('#').pop().trim();
+        const dateObj = new Date(timestamp * 1000);
+        const formattedDate = dateObj.toLocaleString('en-IN', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        });
 
+        const clientcodeint = clientcodev.charAt(0);
 
-                
-                                // Create a container div for each message
-                const messageElement = document.createElement('div');
-                messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded-lg';
+        // --- Main message card ---
+        const messageElement = document.createElement('div');
+        messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded-lg';
+        if (cardcolor == 0) {
+            messageElement.classList.add('bg-gray-50');
+        } else if (cardcolor == 1) {
+            messageElement.classList.add('bg-blue-50');
+        }
 
-                // Conditionally set background color
-                if (cardcolor == 0) {
-                    messageElement.classList.add('bg-gray-50');
-                } else if (cardcolor == 1) {
-                    messageElement.classList.add('bg-blue-50');
-                }
+        // User icon and name based on cardcolor
+        const userIcon = cardcolor == 0 ? 
+            ` <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>` :
+            `<span class="text-blue-600 font-medium text-md">${clientcodeint}</span>`;
 
-                const clientcodeint = clientcodev.charAt(0);
+        const displayName = cardcolor == 0 ? (item.user_name || "User") : lastText;
 
-                // Build the HTML with or without the attachment block
-                messageElement.innerHTML = `
+        messageElement.innerHTML = `
             <div class="w-full px-2 py-2">
                 <div class="flex items-start space-x-3">
-                    <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
-                        <span class="text-blue-600 font-medium text-md">${clientcodeint}</span>
+                    <div class="w-10 h-10 ${cardcolor == 0 ? 'bg-yellow-100 ' : 'bg-blue-200'} rounded-full flex items-center justify-center flex-shrink-0">
+                        ${userIcon}
                     </div>
-                    <div class="flex-1 w-full" >
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-medium text-gray-900">${item.excerpt}</h3>
-                             <p class="text-xs text-gray-500">${formattedDate}</p>
+                    <div class="flex-1 w-full">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-medium text-gray-900">${displayName}</h3>
+                            <p class="text-xs text-gray-500">${formattedDate}</p>
                         </div>
                         <div class="text-sm text-gray-600 mb-2">
-                            <span class="font-medium">${clientcodev}</span>
-                            <span class="text-gray-400 ml-2">${ticketval}</span>
-                            <p>${item.text}</p>
+                            <p>${textexpert || ''}</p>
                         </div>
-                     
-                      ${attachmentUrl
-                        ? `<div class="mt-2">
-                <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-sm">
-                    View Attachment
-                </button>
-           </div>`
-                        : ''
-                    }
-
-                      
+                        ${attachmentUrl ? `
+                            <div class="mt-2">
+                                <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-sm">
+                                    View Attachment
+                                </button>
+                            </div>` : ''}
                     </div>
                 </div>
             </div>
         `;
+        messagediv.appendChild(messageElement);
 
-                messagediv.appendChild(messageElement);
-            });
+        // --- Support card after each message ---
+        const supportCard = document.createElement('div');
+        supportCard.className = 'bg-gray-50 rounded-lg p-4 mb-4';
+      
+        supportCard.innerHTML = `
+            <div class="flex items-start space-x-3">
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-medium text-gray-900">Support</h3>
+                    </div>
+                    <div class="bg-white rounded p-3 mb-2">
+                        <p class="text-sm text-gray-700">Your ticket has been created successfully. Our support team will get back to you in 24–48 hours.</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        messagediv.appendChild(supportCard);
+
+        const revokeBtn = document.getElementById('revokecontainer');
+
+        if (revokeBtn) {
+            revokeBtn.innerHTML = `
+                <button id="thankbtn" onclick="sendthankyou('${ticketval}','${clientcodev}')" class="bg-green-500 w-full text-white px-4 py-2 rounded hover:bg-green-600">
+                    Ok, Thankyou
+                </button>
+                <button id="revokebtn" onclick="ticketrevoke('${ticketval}','${clientcodev}', 1)" class="bg-goodwill-blue text-white w-full px-4 py-2 rounded hover:bg-blue-600 ml-2">
+                    Revoke
+                </button>
+            `;
         }
-
-
+    });
+}
         function closeTicketModal() {
             const modal = document.getElementById('ticketModal');
             modal.querySelector('.transform').classList.remove('scale-100');
@@ -1519,6 +1568,18 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
             return fileItem;
         }
+
+        function clearReplyFileUpload() {
+    // Clear the file input value
+    document.getElementById('replyFileUpload').value = '';
+    
+    // Clear the displayed files
+    replyUploadedFiles.innerHTML = "";
+    replyUploadedFiles.classList.add('hidden');
+    
+    // Reset the current file variable
+    replyCurrentUploadedFile = null;
+}
         function openImageViewer(imageurl) {
             document.getElementById('ticketModal').classList.add('hidden')
             const modal = document.getElementById('imageViewerModal');
@@ -1591,6 +1652,9 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                 const result = await response.json();
                 console.log('Reply sent response:', result);
                 if (result.status == 'ok') {
+                       quill2.root.innerHTML = '';
+                       quill2.setText('');
+clearReplyFileUpload()
                     ticketviewimage( document.getElementById('repticketno').value, document.getElementById('repclientcode').value)
                   
                 }
@@ -1650,18 +1714,10 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                     document.getElementById('ticketclosedno').classList.add('hidden');
                     
                     closeaccordianlist(data);
-
+                     subject=data.tickets
                     const rokebutton = document.getElementById('revokecontainer');
 
-                    const button = document.createElement('button');
-                    button.textContent = 'Revoke Ticket'; // Set button text
-                    button.className = 'px-4 py-2 bg-blue-600 w-full text-white rounded-xl hover:bg-blue-700'; // Tailwind classes or your styles
-                    button.onclick = function () {
-                        alert('Revoke action triggered!');
-                        // You can call any function here
-                    };
-
-                    rokebutton.appendChild(button);
+                  
                 } else if (data.count == 0) {
                     document.getElementById('ticketclosedno').classList.remove('hidden');
                     document.getElementById('closedtickets').classList.add('hidden');
@@ -1819,6 +1875,75 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
                 container.insertAdjacentHTML('beforeend', accordionHtml);
             });
+        }
+
+
+      async function ticketrevoke(ticketno, clientcode, status) {
+  const apiurl = 'https://g1.gwcindia.in/ticket-api/revoke-ticket.php';
+  const formData = new FormData();
+  formData.append('ticket_no', ticketno);
+  formData.append('clientcode', clientcode);
+  formData.append('revoke_status', status);
+
+  try {
+    const response = await fetch(apiurl, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+ 
+    if (result.status=='ok') {
+        document.getElementById('ticketModal').classList.add('hidden')
+        switchTab('viewTickets')
+      console.log('✅ Ticket revoked successfully:', result.message);
+     
+    } else {
+      console.log('⚠️ Failed to revoke ticket:', result.message || result);
+     
+    }
+  } catch (error) {
+    console.error('❌ Error during revoke:', error);
+  
+  }
+}
+
+
+
+async function sendthankyou(ticket, clientcode) {
+            const apiurl = 'https://g1.gwcindia.in/ticket-api/reply-ticket.php';
+            const branchparama = new URLSearchParams(window.location.search)
+            const formData=new FormData
+            formData.append('clientcode', clientcode);
+            formData.append('ticket_no', ticket);
+            formData.append('text', 'Ok, Thankyou');
+            formData.append('branchCode', branchparama.get('branchcode'));
+
+            try {
+                const response = await fetch(apiurl, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                console.log('Reply sent response:', result);
+                if (result.status == 'ok') {
+                     document.getElementById('thankbtn').classList.add('hidden')
+                  
+                }
+
+               
+
+
+                // handle success/failure UI updates here
+            } catch (error) {
+                console.error('Error sending reply:', error);
+            }
         }
 
     </script>
