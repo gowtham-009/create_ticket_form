@@ -224,7 +224,7 @@
                             <!-- Submit Button -->
                             <div>
                                 <button type="submit" id="createtokenbtn"
-                                    class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                    class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2  active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                     disabled>
                                     Create Ticket
                                 </button>
@@ -412,6 +412,10 @@
                     </div>
                 </div>
 
+                <div class="w-full mt-2" id="revokecontainer">
+
+                </div>
+
                 <!-- Reply Form -->
                 <div class="border-t pt-6" id="closenonecontent">
                     <form id="replyForm" class="space-y-4">
@@ -450,7 +454,7 @@
                         </div>
                         <!-- Submit Button -->
                         <button type="submit" disabled id="replaybtn"
-                            class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                            class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
                             Reply & Submit
                         </button>
                     </form>
@@ -475,14 +479,11 @@
             <!-- Image Container -->
             <div class="relative max-w-full max-h-full">
                 <img id="viewerImage"
-                    src="https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop"
+                    
                     alt="Attachment" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl">
 
                 <!-- Image Info -->
-                <div class="absolute bottom-4 left-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg">
-                    <p class="text-sm font-medium" id="imageName">image_02.png</p>
-                    <p class="text-xs text-gray-300" id="imageSize">245 KB</p>
-                </div>
+               
 
 
 
@@ -817,7 +818,7 @@
 
             const files = Array.from(e.dataTransfer.files);
             if (files.length > 1) {
-                // alert("Only one file can be uploaded at a time.");
+               
                 return;
             }
             handleFiles(files);
@@ -1024,6 +1025,7 @@
         document.getElementById('replaybtn').disabled = true
         async function openTicket() {
             document.getElementById('closenonecontent').classList.remove('hidden')
+            document.getElementById('revokecontainer').classList.add('hidden')
             try {
                 const ticketbranchparam = new URLSearchParams(window.location.search);
                 const branchCode = ticketbranchparam.get('branchcode');
@@ -1036,7 +1038,7 @@
 
                 const data = await response.json();
                 if (data.status == 'ok' && data.count > 0) {
-
+                
                     document.getElementById('ticketsList').classList.remove('hidden')
 
                     accordianlist(data)
@@ -1121,10 +1123,10 @@
 
             const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
                 <span class="ml-2 text-gray-500 cursor-pointer"
-                      onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                    ${ticket.ticketNo}
+                      >
+                    #${ticket.ticketNo}
                 </span>
                 <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
             </div>
@@ -1136,14 +1138,11 @@
             <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
                     <span class="font-medium text-gray-700">${clientCode}</span>
-                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" 
-                         id="arrow-${uniqueId}" 
-                         xmlns="http://www.w3.org/2000/svg" 
-                         fill="none" 
-                         viewBox="0 0 24 24" 
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
+                   
+                
+                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
                 </div>
             </div>
             <div class="hidden border-t border-gray-200 bg-white" id="details-${uniqueId}">
@@ -1167,11 +1166,10 @@
 
                 const ticketsHtml = clientTickets.map(ticket => `
             <div class="p-4 border-b border-gray-100">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between cursor-pointer"   onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
                     <div>
-                        <span class="ml-2 text-gray-500 cursor-pointer"
-                              onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                            ${ticket.ticketNo}
+                        <span class="ml-2 text-gray-500 ">
+                            #${ticket.ticketNo}
                         </span>
                     </div>
                     <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
@@ -1184,9 +1182,11 @@
                 <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
                         <span class="font-medium text-gray-700">${clientCode}</span>
-                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                      
+
+                           <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
                     </div>
                 </div>
                 <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
@@ -1211,11 +1211,10 @@
 
             const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
                 <div>
-                    <span class="ml-2 text-gray-500 cursor-pointer"
-                          onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                        ${ticket.ticketNo}
+                  <span class="ml-2 text-gray-500 cursor-spanointer">
+                       #${ticket.ticketNo}
                     </span>
                 </div>
                 <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
@@ -1259,7 +1258,7 @@
             document.getElementById('repticketno').value = ticketNumber
 
             // Update modal content
-            modalTicketNumber.textContent = ticketNumber;
+            modalTicketNumber.textContent ='#'+ ticketNumber;
           //  modalClientCode.textContent = clientCode.charAt(0);
             //modalClientFullCode.textContent = clientCode;
            // modalTicketId.textContent = ticketNumber.replace('#', '');
@@ -1363,27 +1362,28 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                 
                                 // Create a container div for each message
                 const messageElement = document.createElement('div');
-                messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded';
+                messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded-lg';
 
                 // Conditionally set background color
                 if (cardcolor == 0) {
-                    messageElement.classList.add('bg-blue-300');
+                    messageElement.classList.add('bg-gray-50');
                 } else if (cardcolor == 1) {
-                    messageElement.classList.add('bg-blue-200');
+                    messageElement.classList.add('bg-blue-50');
                 }
 
                 const clientcodeint = clientcodev.charAt(0);
 
                 // Build the HTML with or without the attachment block
                 messageElement.innerHTML = `
-            <div class="w-full">
+            <div class="w-full px-2 py-2">
                 <div class="flex items-start space-x-3">
-                    <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center flex-shrink-0">
                         <span class="text-blue-600 font-medium text-md">${clientcodeint}</span>
                     </div>
                     <div class="flex-1 w-full" >
                         <div class="flex items-center justify-between mb-2">
                             <h3 class="font-medium text-gray-900">${item.excerpt}</h3>
+                             <p class="text-xs text-gray-500">${formattedDate}</p>
                         </div>
                         <div class="text-sm text-gray-600 mb-2">
                             <span class="font-medium">${clientcodev}</span>
@@ -1400,10 +1400,7 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                         : ''
                     }
 
-                       <div class="w-full flex justify-end gap-2" >
-                            <p>${formattedDate}</p>
-                            <p></p>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -1635,6 +1632,7 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
         async function closefetchdata() {
             document.getElementById('closenonecontent').classList.add('hidden')
+            document.getElementById('revokecontainer').classList.remove('hidden')
             const closeparams = new URLSearchParams(window.location.search);
             const branchCode = closeparams.get('branchcode');
 
@@ -1675,6 +1673,18 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
         function closeaccordianlist(datavalue) {
             const tickets = datavalue.tickets;
+            const rokebutton = document.getElementById('revokecontainer');
+
+const button = document.createElement('button');
+button.textContent = 'Revoke Access'; // Set button text
+button.className = 'px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700'; // Tailwind classes or your styles
+button.onclick = function () {
+    alert('Revoke action triggered!');
+    // You can call any function here
+};
+
+rokebutton.appendChild(button); // Add button to the container
+
 
             // Group tickets by clientCode
             closeticketMap = {};
@@ -1740,10 +1750,9 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
             const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between">
-                <span class="ml-2 text-gray-500 cursor-pointer"
-                      onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                    ${ticket.ticketNo}
+            <div class="flex items-center justify-between cursor-pointer"  onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                <span class="ml-2 text-gray-500 ">
+                    #${ticket.ticketNo}
                 </span>
                 <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
             </div>
@@ -1755,14 +1764,9 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
             <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
                     <span class="font-medium text-gray-700">${clientCode}</span>
-                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" 
-                         id="closearrow-${uniqueId}" 
-                         xmlns="http://www.w3.org/2000/svg" 
-                         fill="none" 
-                         viewBox="0 0 24 24" 
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
+                       <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
                 </div>
             </div>
             <div class="hidden border-t border-gray-200 bg-white" id="closedetails-${uniqueId}">
@@ -1785,11 +1789,10 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
                 const ticketsHtml = clientTickets.map(ticket => `
             <div class="p-4 border-b border-gray-100">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between cursor-pointer"   onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
                     <div>
-                        <span class="ml-2 text-gray-500 cursor-pointer"
-                              onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                            ${ticket.ticketNo}
+                        <span class="ml-2 text-gray-500 ">
+                            #${ticket.ticketNo}
                         </span>
                     </div>
                     <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
@@ -1802,9 +1805,9 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                 <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
                         <span class="font-medium text-gray-700">${clientCode}</span>
-                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
+                          <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
                     </div>
                 </div>
                 <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
