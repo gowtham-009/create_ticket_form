@@ -177,11 +177,12 @@
 
                             <!-- Subject -->
                             <div>
-                                <input type="text" id="subject" placeholder="Subject"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                    onkeypress="return /[A-Za-z]/.test(event.key)"
-                                    oninput="this.value = this.value.replace(/[^A-Za-z]/g, '').toUpperCase()"
-                                    onpaste="this.value = this.value.replace(/[^A-Za-z]/g, '').toUpperCase()">
+                               <input type="text" id="subject" placeholder="Subject"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                onkeypress="return /[A-Za-z0-9 ]/.test(event.key)"
+                                oninput="this.value = this.value.replace(/[^A-Za-z0-9 ]/g, '').toUpperCase()"
+                                onpaste="setTimeout(() => this.value = this.value.replace(/[^A-Za-z0-9 ]/g, '').toUpperCase(), 0)">
+
                             </div>
                             <div class="full mx-auto">
                                 <div id="editor">
@@ -585,54 +586,60 @@
 
 
 
-        let isClientCodeValid = false;
-        const clientcodecheck = document.getElementById('clientCode')
-        clientcodecheck.addEventListener('change', async function () {
-            const clientCode = clientcodecheck.value.trim();
-            const clienterror = document.getElementById('invalidclientcode');
-            const formData = new FormData
-            formData.append('ticket', enc)
-            if (clientCode) {
-                try {
-                    const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=${encodeURIComponent(enc)}&ticket=${enc}&cid=${clientCode}`;
+      let isClientCodeValid = false;
+const clientcodecheck = document.getElementById('clientCode');
+const clienterror = document.getElementById('invalidclientcode');
 
-                    const response = await fetch(apiurl, {
-                        method: 'GET',
+// ✅ When user focuses (clicks into) the input
+clientcodecheck.addEventListener('focus', function () {
+    clienterror.classList.add('hidden');
+    clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
+    clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
+});
 
-                    });
-                    const data = await response.json();
+// ✅ When user blurs (clicks out of) the input
+clientcodecheck.addEventListener('blur', async function () {
+    const clientCode = clientcodecheck.value.trim();
+    const formData = new FormData();
+    formData.append('ticket', enc);
 
-                    const branchurlParams = new URLSearchParams(window.location.search);
+    if (clientCode) {
+        try {
+            const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=${encodeURIComponent(enc)}&ticket=${enc}&cid=${clientCode}`;
 
+            const response = await fetch(apiurl, { method: 'GET' });
+            const data = await response.json();
 
-                    if (data.BranchCode === branchurlParams.get('branchcode')) {
-                        clienterror.classList.add('hidden')
-                        isClientCodeValid = true;
-                        clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
-                        clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
-                    } else {
-                        clienterror.classList.remove('hidden');
-                        isClientCodeValid = false;
-                        clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
-                        clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                    }
+            const branchurlParams = new URLSearchParams(window.location.search);
 
-                } catch (error) {
-
-                    clienterror.classList.remove('hidden');
-                    clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
-                    clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                    isClientCodeValid = false;
-                }
+            if (data.BranchCode === branchurlParams.get('branchcode')) {
+                clienterror.classList.add('hidden');
+                isClientCodeValid = true;
+                clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
+                clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
             } else {
                 clienterror.classList.remove('hidden');
+                isClientCodeValid = false;
                 clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
                 clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                isClientCodeValid = false;
             }
 
-            validateForm(); // Re-run validation after API check
-        });
+        } catch (error) {
+            clienterror.classList.remove('hidden');
+            clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+            clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
+            isClientCodeValid = false;
+        }
+    } else {
+        clienterror.classList.remove('hidden');
+        clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+        clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
+        isClientCodeValid = false;
+    }
+
+    validateForm();
+});
+
         // Function to check if all required fields are filled
         function validateForm() {
             const clientCode = document.getElementById('clientCode').value.trim();
@@ -1259,26 +1266,11 @@
 
             // Update modal content
             modalTicketNumber.textContent ='#'+ ticketNumber;
-          //  modalClientCode.textContent = clientCode.charAt(0);
-            //modalClientFullCode.textContent = clientCode;
-           // modalTicketId.textContent = ticketNumber.replace('#', '');
+     
             datec.textContent = date;
             timec.textContent = time;
 
-            // Clear previous content inside viewimage
-           // viewimage.innerHTML = '';
-
-            // Create a button and append to viewimage div
-            // const button = document.createElement('button');
-            // button.textContent = 'View Attachment';
-            // button.className = ' text-blue-500  text-sm';
-            // button.onclick = function () {
-            //     ticketviewimage(ticketNumber, clientCode)
-            //     modal.classList.add('hidden');
-            // };
-            // viewimage.appendChild(button);
-
-            // Show modal
+        
             modal.classList.remove('hidden');
             setTimeout(() => {
                 modal.querySelector('.transform').classList.remove('scale-95');
@@ -1600,12 +1592,7 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
                 console.log('Reply sent response:', result);
                 if (result.status == 'ok') {
                     ticketviewimage( document.getElementById('repticketno').value, document.getElementById('repclientcode').value)
-                    // successModal.classList.remove('hidden');
-                    // successModal.querySelector('.transform').classList.remove('scale-95');
-                    // successModal.querySelector('.transform').classList.add('scale-100');
-
-                    // document.getElementById('success').innerText = result.message
-                    // document.getElementById('ticketid').innerText = result.data.ticket_no
+                  
                 }
 
                 else if (result.status == 'error') {
@@ -1668,7 +1655,7 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
                     const button = document.createElement('button');
                     button.textContent = 'Revoke Ticket'; // Set button text
-                    button.className = 'px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'; // Tailwind classes or your styles
+                    button.className = 'px-4 py-2 bg-blue-600 w-full text-white rounded-xl hover:bg-blue-700'; // Tailwind classes or your styles
                     button.onclick = function () {
                         alert('Revoke action triggered!');
                         // You can call any function here
