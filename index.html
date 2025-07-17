@@ -1163,18 +1163,16 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
         }
 
         function renderClientAccordion(clientCode) {
-         
+
+        
             const container = document.getElementById('ticketsList');
             const clientTickets = ticketMap[clientCode];
-           
             const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-
             const ticketsHtml = clientTickets.map(ticket => `
         <div class="p-4 border-b border-gray-100">
             <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                <span class="ml-2 text-gray-500 cursor-pointer"
-                      >
-                    #${ticket.ticketNo}
+                <span class="ml-2 text-gray-500 cursor-pointer">
+                    #${ticket.ticketNo} 
                 </span>
                 <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
             </div>
@@ -1198,6 +1196,7 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
             </div>
         </div>
     `;
+
 
             container.insertAdjacentHTML('beforeend', accordionHtml);
             container.classList.remove('hidden');
@@ -1262,7 +1261,7 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
             <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
                 <div>
                   <span class="ml-2 text-gray-500 cursor-spanointer">
-                       #${ticket.ticketNo}
+                       #${ticket.ticketNo} 
                     </span>
                 </div>
                 <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
@@ -1485,7 +1484,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
                 Ok, Thankyou
             </button>
             <button id="revokebtn" onclick="ticketrevoke('${ticketval}','${clientcodev}', 1)" class="bg-goodwill-blue text-white w-full px-4 py-2 rounded hover:bg-blue-600 ml-2">
-                Revoke
+                Reopen
             </button>
         `;
     }
