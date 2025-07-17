@@ -1661,7 +1661,20 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
                     document.getElementById('closedtickets').classList.remove('hidden');
                     document.getElementById('ticketclosedno').classList.add('hidden');
+                    
                     closeaccordianlist(data);
+
+                    const rokebutton = document.getElementById('revokecontainer');
+
+                    const button = document.createElement('button');
+                    button.textContent = 'Revoke Ticket'; // Set button text
+                    button.className = 'px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'; // Tailwind classes or your styles
+                    button.onclick = function () {
+                        alert('Revoke action triggered!');
+                        // You can call any function here
+                    };
+
+                    rokebutton.appendChild(button);
                 } else if (data.count == 0) {
                     document.getElementById('ticketclosedno').classList.remove('hidden');
                     document.getElementById('closedtickets').classList.add('hidden');
@@ -1673,17 +1686,7 @@ const formattedDate = dateObj.toLocaleString('en-IN', {
 
         function closeaccordianlist(datavalue) {
             const tickets = datavalue.tickets;
-            const rokebutton = document.getElementById('revokecontainer');
-
-const button = document.createElement('button');
-button.textContent = 'Revoke Access'; // Set button text
-button.className = 'px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700'; // Tailwind classes or your styles
-button.onclick = function () {
-    alert('Revoke action triggered!');
-    // You can call any function here
-};
-
-rokebutton.appendChild(button); // Add button to the container
+             // Add button to the container
 
 
             // Group tickets by clientCode
@@ -1701,19 +1704,20 @@ rokebutton.appendChild(button); // Add button to the container
             closefilterClientCode("");
         }
 
-        function closetoggleTicketDetails(id) {
-            const details = document.getElementById(`closedetails-${id}`);
-            const arrow = document.getElementById(`closearrow-${id}`);
-            const isOpen = !details.classList.contains('hidden');
+       function closetoggleTicketDetails(id) {
+    const details = document.getElementById(`closedetails-${id}`);
+    const arrow = document.getElementById(`closearrow-${id}`);
+    const isOpen = !details.classList.contains('hidden');
 
-            if (isOpen) {
-                details.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            } else {
-                details.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-            }
-        }
+    if (isOpen) {
+        details.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+    } else {
+        details.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+    }
+}
+
 
         function closefilterClientCode(searchTerm) {
             const container = document.getElementById('closeaccordion');
@@ -1762,18 +1766,25 @@ rokebutton.appendChild(button); // Add button to the container
             const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-gray-700">${clientCode}</span>
-                       <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
+    <div class="flex items-center justify-between">
+        <span class="font-medium text-gray-700">${clientCode}</span>
+     
+
+         <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="closearrow-${uniqueId}">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
-                </div>
-            </div>
+    </div>
+</div>
+
             <div class="hidden border-t border-gray-200 bg-white" id="closedetails-${uniqueId}">
                 ${ticketsHtml}
             </div>
         </div>
-    `;
+
+
+    `
+    
+    ;
 
             container.insertAdjacentHTML('beforeend', accordionHtml);
         }
@@ -1803,13 +1814,16 @@ rokebutton.appendChild(button); // Add button to the container
                 const accordionHtml = `
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
-                    <div class="flex items-center justify-between">
-                        <span class="font-medium text-gray-700">${clientCode}</span>
-                          <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
+    <div class="flex items-center justify-between">
+        <span class="font-medium text-gray-700">${clientCode}</span>
+       
+
+         <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="closearrow-${uniqueId}">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                         </svg>
-                    </div>
-                </div>
+    </div>
+</div>
+
                 <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
                     ${ticketsHtml}
                 </div>
