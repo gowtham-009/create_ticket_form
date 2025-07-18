@@ -172,12 +172,10 @@
                             <div class="mb-6">
                                 <div class="text-sm text-gray-600 mb-1">
                                     <span class="font-medium text-gray-800">Branch Name & Code :</span>
-                                    <span class="font-medium text-gray-800" id="branchname"></span> <span
-                                        class="font-medium text-gray-800" id="branchcode"></span>
+                                    <span class="font-medium text-gray-800" id="branchname"></span> <span class="hidden" id="amp1">&</span> <span class="font-medium text-gray-800" id="branchcode"></span>
                                 </div>
                                 <div class="text-sm text-gray-500 hidden" id="empcontent">
-                                    Employee Name & Code : <span id="employeeName"></span> <span
-                                        id="employeecode"></span>
+                                    Employee Name & Code : <span id="employeeName"></span> <span class="hidden" id="amp2">&</span> <span id="employeecode"></span>
                                 </div>
                             </div>
                             <!-- Client Code -->
@@ -528,6 +526,14 @@
             const branchCode = urlParams.get('branchcode');
             const employeeName = urlParams.get('empName');
             const employeeCode = urlParams.get('empCode');
+
+            if(branchName&&branchCode){
+                document.getElementById('amp1').classList.remove('hidden')
+            }
+
+            if(employeeName&&employeeCode){
+                 document.getElementById('amp2').classList.remove('hidden')
+            }
 
             if (branchName) {
                 document.getElementById('branchname').innerText = branchName;
