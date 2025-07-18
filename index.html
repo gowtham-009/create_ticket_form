@@ -1423,9 +1423,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
 
             </div>`
             : `<span class="text-blue-600 font-medium text-md">${clientcodeint}</span>`;
-            // ? `<svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
-            // : `<span class="text-blue-600 font-medium text-md">${clientcodeint}</span>`;
-
+          
         const displayName = cardcolor == 0 ? (item.user_name || "User") : subtext;
 
         messageElement.innerHTML = `
