@@ -295,8 +295,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3 class="text-lg font-medium text-gray-900 mb-2">No Resolved Tickets</h3>
-                                <p class="text-gray-500">Resolved tickets will appear here once they are completed.</p>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2" id="tickettext">No Resolved Tickets</h3>
+                                <p class="text-gray-500" id="ticketpara">Resolved tickets will appear here once they are completed.</p>
                             </div>
                         </div>
                         <!-- Tickets List -->
@@ -1113,6 +1113,12 @@
 
                     document.getElementById('noticket').classList.remove('hidden')
                     document.getElementById('ticketsList').classList.add('hidden')
+                    document.getElementById('tickettext').innerHTML=''
+                    document.getElementById('tickettext').innerText='No Open Tickets'
+                      document.getElementById('ticketpara').innerHTML=''
+                    document.getElementById('ticketpara').innerText='Opened tickets will appear here once they are completed.'
+                    
+
                 }
 
             } catch (error) {
