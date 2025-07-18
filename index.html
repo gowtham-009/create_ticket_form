@@ -791,7 +791,7 @@ initializeDropdowns();
         });
 
         function switchTab(activeTab) {
-            console.log(activeTab)
+          
             if(activeTab=='create'){
                 document.getElementById('clientCode').value=''
                  document.getElementById('category').value=''
@@ -1162,33 +1162,40 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
             }
         }
 
-        function renderClientAccordion(clientCode) {
+       function renderClientAccordion(clientCode) {
+    const container = document.getElementById('ticketsList');
+    const clientTickets = ticketMap[clientCode];
+    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+    
+    const deptcategories = categories; // must be globally available or defined earlier
 
-        
-            const container = document.getElementById('ticketsList');
-            const clientTickets = ticketMap[clientCode];
-            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-            const ticketsHtml = clientTickets.map(ticket => `
-        <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                <span class="ml-2 text-gray-500 cursor-pointer">
-                    #${ticket.ticketNo} 
-                </span>
-                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
+    const ticketsHtml = clientTickets.map(ticket => {
+        const index = parseInt(ticket.departmentId) - 19; // adjust for 1-based IDs starting at 18
+        const departmentName = deptcategories[index] || 'Unknown';
+
+        return `
+            <div class="p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between cursor-pointer"
+                     onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                    <span class="ml-2 text-gray-500">
+                        #${ticket.ticketNo} ${departmentName}
+                    </span>
+                    
+                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 
-            const accordionHtml = `
+    const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                 <div class="flex items-center justify-between">
                     <span class="font-medium text-gray-700">${clientCode}</span>
-                   
-                
-                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"  id="arrow-${uniqueId}" >
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
+                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200"
+                         id="arrow-${uniqueId}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                 </div>
             </div>
             <div class="hidden border-t border-gray-200 bg-white" id="details-${uniqueId}">
@@ -1197,43 +1204,53 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
         </div>
     `;
 
+    container.insertAdjacentHTML('beforeend', accordionHtml);
+    container.classList.remove('hidden');
+}
 
-            container.insertAdjacentHTML('beforeend', accordionHtml);
-            container.classList.remove('hidden');
-        }
-        function renderAllAccordions() {
-            const container = document.getElementById('ticketsList');
-            container.innerHTML = '';
-            container.classList.remove('hidden');
+    function renderAllAccordions() {
+    const container = document.getElementById('ticketsList');
+    container.innerHTML = '';
+    container.classList.remove('hidden');
 
-            Object.entries(ticketMap).forEach(([clientCode, clientTickets]) => {
-                const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-                const detailsId = `details-${uniqueId}`;
-                const arrowId = `arrow-${uniqueId}`;
+    const deptcategories = categories; // assumed to be globally defined or passed in
 
-                const ticketsHtml = clientTickets.map(ticket => `
-            <div class="p-4 border-b border-gray-100">
-                <div class="flex items-center justify-between cursor-pointer"   onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                    <div>
-                        <span class="ml-2 text-gray-500 ">
-                            #${ticket.ticketNo}
-                        </span>
+    Object.entries(ticketMap).forEach(([clientCode, clientTickets]) => {
+        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+        const detailsId = `details-${uniqueId}`;
+        const arrowId = `arrow-${uniqueId}`;
+
+        const ticketsHtml = clientTickets.map(ticket => {
+            const departmentId = parseInt(ticket.departmentId);
+            const index = departmentId - 19; // 1-based to 0-based offset from ID 18
+            const departmentName = deptcategories[index] || 'Unknown';
+          
+            return `
+                <div class="p-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between cursor-pointer"
+                         onclick="openTicketModal('${ticket.ticketNo}', '${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                        <div>
+                            <span class="ml-2 text-gray-500">
+                                #${ticket.ticketNo} 
+                            </span>
+                             <span class="ml-3 text-gray-500">
+                                 ${departmentName}
+                            </span>
+                        </div>
+                        <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
                     </div>
-                    <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
-                const accordionHtml = `
+        const accordionHtml = `
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
                     <div class="flex items-center justify-between">
                         <span class="font-medium text-gray-700">${clientCode}</span>
-                      
-
-                           <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
                     </div>
                 </div>
                 <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
@@ -1242,52 +1259,13 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
             </div>
         `;
 
-                container.insertAdjacentHTML('beforeend', accordionHtml);
-            });
-        }
+        container.insertAdjacentHTML('beforeend', accordionHtml);
+    });
+}
 
-        function renderSingleAccordion(clientCode) {
-            const container = document.getElementById('ticketsList');
-            container.innerHTML = '';
-            container.classList.remove('hidden');
 
-            const clientTickets = ticketMap[clientCode];
-            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-            const detailsId = `details-${uniqueId}`;
-            const arrowId = `arrow-${uniqueId}`;
 
-            const ticketsHtml = clientTickets.map(ticket => `
-        <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                <div>
-                  <span class="ml-2 text-gray-500 cursor-spanointer">
-                       #${ticket.ticketNo} 
-                    </span>
-                </div>
-                <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">Open</span>
-            </div>
-        </div>
-    `).join('');
-
-            const accordionHtml = `
-        <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
-            <div class="p-4 cursor-pointer" onclick="toggleTicketDetails('${uniqueId}')">
-                <div class="flex items-center justify-between">
-                    <span class="font-medium text-gray-700">${clientCode}</span>
-                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </div>
-            </div>
-            <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
-                ${ticketsHtml}
-            </div>
-        </div>
-    `;
-
-            container.insertAdjacentHTML('beforeend', accordionHtml);
-        }
-
+    
 
         function openTicketModal(ticketNumber, clientCode, date, time) {
 
@@ -1688,7 +1666,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
                 });
 
                 const result = await response.json();
-                console.log('Reply sent response:', result);
+               
                 if (result.status == 'ok') {
                        quill2.root.innerHTML = '';
                        quill2.setText('');
@@ -1829,91 +1807,96 @@ function messagerender(messagerender, clientcodev, ticketval) {
         }
 
         function closerenderClientAccordion(clientCode) {
-            const container = document.getElementById('closeaccordion');
-            const clientTickets = closeticketMap[clientCode];
-            const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+    const container = document.getElementById('closeaccordion');
+    const clientTickets = closeticketMap[clientCode];
+    const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
 
-            const ticketsHtml = clientTickets.map(ticket => `
-        <div class="p-4 border-b border-gray-100">
-            <div class="flex items-center justify-between cursor-pointer"  onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                <span class="ml-2 text-gray-500 ">
-                    #${ticket.ticketNo}
-                </span>
-                <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
+    const deptcategories = categories; // assumed available globally
+
+    const ticketsHtml = clientTickets.map(ticket => {
+        const index = parseInt(ticket.departmentId) - 19; // Adjust for 1-based ID starting at 18
+        const departmentName = deptcategories[index] || 'Unknown';
+
+        return `
+            <div class="p-4 border-b border-gray-100">
+                <div class="flex items-center justify-between cursor-pointer" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                    <span class="ml-2 text-gray-500">
+                        #${ticket.ticketNo} ${departmentName}
+                    </span>
+                    <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
+                </div>
             </div>
-        </div>
-      `).join('');
+        `;
+    }).join('');
 
-            const accordionHtml = `
+    const accordionHtml = `
         <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
             <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
-    <div class="flex items-center justify-between">
-        <span class="font-medium text-gray-700">${clientCode}</span>
-     
-
-         <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="closearrow-${uniqueId}">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-    </div>
-</div>
-
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-gray-700">${clientCode}</span>
+                    <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="closearrow-${uniqueId}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+            </div>
             <div class="hidden border-t border-gray-200 bg-white" id="closedetails-${uniqueId}">
                 ${ticketsHtml}
             </div>
         </div>
+    `;
+
+    container.insertAdjacentHTML('beforeend', accordionHtml);
+}
 
 
-    `
-    
-    ;
+       function closerenderAllAccordions() {
+    const container = document.getElementById('closeaccordion');
+    container.innerHTML = '';
 
-            container.insertAdjacentHTML('beforeend', accordionHtml);
-        }
+    const deptcategories = categories; // assumed globally available
 
-        function closerenderAllAccordions() {
-            const container = document.getElementById('closeaccordion');
-            container.innerHTML = '';
+    Object.entries(closeticketMap).forEach(([clientCode, clientTickets]) => {
+        const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
+        const detailsId = `closedetails-${uniqueId}`;
+        const arrowId = `closearrow-${uniqueId}`;
 
-            Object.entries(closeticketMap).forEach(([clientCode, clientTickets]) => {
-                const uniqueId = `client-${clientCode.replace(/\W/g, '')}`;
-                const detailsId = `closedetails-${uniqueId}`;
-                const arrowId = `closearrow-${uniqueId}`;
+        const ticketsHtml = clientTickets.map(ticket => {
+            const index = parseInt(ticket.departmentId) - 19;
+            const departmentName = deptcategories[index] || 'Unknown';
 
-                const ticketsHtml = clientTickets.map(ticket => `
-            <div class="p-4 border-b border-gray-100">
-                <div class="flex items-center justify-between cursor-pointer"   onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
-                    <div>
-                        <span class="ml-2 text-gray-500 ">
-                            #${ticket.ticketNo}
-                        </span>
+            return `
+                <div class="p-4 border-b border-gray-100">
+                    <div class="flex items-center justify-between cursor-pointer" onclick="openTicketModal('${ticket.ticketNo}','${clientCode}', '${ticket.createdDate}', '${ticket.createdTime}')">
+                        <div>
+                            <span class="ml-2 text-gray-500">
+                                #${ticket.ticketNo} ${departmentName}
+                            </span>
+                        </div>
+                        <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
                     </div>
-                    <span class="px-3 py-1 bg-red-100 text-red-500 text-sm font-medium rounded-full">Closed</span>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
 
-                const accordionHtml = `
+        const accordionHtml = `
             <div class="bg-gray-50 rounded-lg border border-gray-200 mb-2">
                 <div class="p-4 cursor-pointer" onclick="closetoggleTicketDetails('${uniqueId}')">
-    <div class="flex items-center justify-between">
-        <span class="font-medium text-gray-700">${clientCode}</span>
-       
-
-         <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="closearrow-${uniqueId}">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                        </svg>
-    </div>
-</div>
-
+                    <div class="flex items-center justify-between">
+                        <span class="font-medium text-gray-700">${clientCode}</span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200" id="${arrowId}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
                 <div class="hidden border-t border-gray-200 bg-white" id="${detailsId}">
                     ${ticketsHtml}
                 </div>
             </div>
         `;
 
-                container.insertAdjacentHTML('beforeend', accordionHtml);
-            });
-        }
+        container.insertAdjacentHTML('beforeend', accordionHtml);
+    });
+}
 
 
       async function ticketrevoke(ticketno, clientcode, status) {
@@ -1939,7 +1922,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
     if (result.status=='ok') {
         document.getElementById('ticketModal').classList.add('hidden')
         switchTab('viewTickets')
-      console.log('✅ Ticket revoked successfully:', result.message);
+     
      
     } else {
       console.log('⚠️ Failed to revoke ticket:', result.message || result);
