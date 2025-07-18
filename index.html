@@ -146,15 +146,15 @@
                     <nav class="flex justify-center">
                         <button id="createTab"
                             class="px-6 py-4 text-sm font-medium text-white bg-goodwill-blue border-b-2 border-goodwill-blue focus:outline-none transition-colors duration-200">
-                            Create Ticket
+                            Create 
                         </button>
                         <button id="viewTicketsTab"
                             class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 focus:outline-none transition-colors duration-200">
-                            View Tickets
+                            In Progress
                         </button>
                         <button id="resolvedTicketsTab"
                             class="px-6 py-4 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 focus:outline-none transition-colors duration-200">
-                            Resolved Tickets
+                            Resolved 
                         </button>
                     </nav>
                 </div>
@@ -355,7 +355,7 @@
 
     <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 w-5/6 transform transition-all duration-300 scale-95">
+        <div class="bg-white rounded-lg p-6 w-3/4 transform transition-all duration-300 scale-95">
             <div class="text-center">
                 <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,7 +376,7 @@
     </div>
 
     <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg p-6 max-w-sm mx-4 transform transition-all duration-300 scale-95">
+        <div class="bg-white rounded-lg p-6 w-3/4 mx-4 transform transition-all duration-300 scale-95">
             <div class="text-center">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -750,7 +750,7 @@ clientcodecheck.addEventListener('blur', async function () {
                 });
 
                 // Log the extracted keys (for verification)
-                console.log("Extracted Category Keys:", categories);
+               
 
                 // Update subcategories when category changes (using original API data)
                 categorySelect.addEventListener('change', (e) => {
@@ -826,9 +826,11 @@ clientcodecheck.addEventListener('blur', async function () {
             }
             if (activeTab == 'viewTickets') {
                 openTicket()
+                document.getElementById('searchClientCode').value=''
             }
 
             if (activeTab == 'resolvedTickets') {
+                document.getElementById('searchClosedClientCode').value=''
                 closefetchdata()
             }
             // Reset all tabs
@@ -1443,8 +1445,23 @@ function renderAllAccordions() {
                 const attachmentUrl = hasAttachment ? item.attachments[0].direct_frontend_url : null;
                 const timestamp = item.created_at;
 
-                const textval = item.excerpt || '';
-                const textexpert = textval.split('#').pop().trim();
+               const textval = item.text || '';
+const rawHtml = textval.split('#').pop().trim();
+
+// Sanitize and clean whitespace inside HTML
+const tempDiv = document.createElement('div');
+tempDiv.innerHTML = rawHtml;
+
+// Optional: compact spaces inside text nodes
+tempDiv.querySelectorAll('*').forEach(el => {
+    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+        el.textContent = el.textContent.replace(/\s+/g, ' ').trim();
+    }
+});
+
+const cleanedHtml = tempDiv.innerHTML;
+
+
                 const dateObj = new Date(timestamp * 1000);
                 const formattedDate = dateObj.toLocaleString('en-IN', {
                     day: '2-digit',
@@ -1482,7 +1499,8 @@ function renderAllAccordions() {
                         <div class="inline-block rounded-2xl ${bgColor} px-4 py-3 shadow-sm w-full">
                             <div class="${isRightSide ? 'text-right' : 'text-left'}">
                                 <h3 class="text-sm font-semibold text-gray-800 mb-1 text-left" >${displayName}</h3>
-                                <p class="text-sm text-gray-800 text-left">${textexpert || ''}</p>
+                               <div class="text-sm text-gray-800 text-left">${cleanedHtml || ''}</div>
+
                                 ${attachmentUrl ? `
                                     <div class=" flex justify-start w-full">
                                         <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-xs">
