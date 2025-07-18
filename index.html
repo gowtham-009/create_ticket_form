@@ -155,11 +155,11 @@
                             <div class="mb-6">
                                 <div class="text-sm text-gray-600 mb-1">
                                     <span class="font-medium text-gray-800">Branch Name & Code :</span>
-                                    <span class="font-medium text-gray-800" id="branchname"></span> & <span
+                                    <span class="font-medium text-gray-800" id="branchname"></span>  <span
                                         class="font-medium text-gray-800" id="branchcode"></span>
                                 </div>
                                 <div class="text-sm text-gray-500">
-                                    Employee Name & Code : <span id="employeeName"></span> & <span
+                                    Employee Name & Code : <span id="employeeName"></span>  <span
                                         id="employeecode"></span>
                                 </div>
                             </div>
@@ -501,17 +501,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script>
 
-        window.onload = function () {
-            const urlParams = new URLSearchParams(window.location.search);
+     window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
 
-            document.getElementById('branchname').innerText = `${urlParams.get('branchname')}`;
-            document.getElementById('branchcode').innerText = `${urlParams.get('branchcode')}`;
-            document.getElementById('employeeName').innerText = `${urlParams.get('empName')}`;
+    const branchName = urlParams.get('branchname');
+    const branchCode = urlParams.get('branchcode');
+    const employeeName = urlParams.get('empName');
+    const employeeCode = urlParams.get('empCode');
 
-            document.getElementById('employeecode').innerText = `${urlParams.get('empCode')}`
+    if (branchName) {
+        document.getElementById('branchname').innerText = branchName;
+    }
 
+    if (branchCode) {
+        document.getElementById('branchcode').innerText = branchCode;
+    }
 
-        };
+    if (employeeName) {
+        document.getElementById('employeeName').innerText = employeeName;
+    }
+
+    if (employeeCode) {
+        document.getElementById('employeecode').innerText = employeeCode;
+    }
+};
+
 
        
 
@@ -767,10 +781,6 @@ initializeDropdowns();
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', initializeDropdowns);
-
-
-
-
 
         // Tab functionality
         const tabs = {
@@ -1081,6 +1091,7 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
                 if (data.status == 'ok' && data.count > 0) {
                 
                     document.getElementById('ticketsList').classList.remove('hidden')
+                     document.getElementById('noticket').classList.add('hidden')
                    
                     subject=data.tickets
                     accordianlist(data)
@@ -1089,6 +1100,7 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
                 else if (data.count == 0) {
 
                     document.getElementById('noticket').classList.remove('hidden')
+                    document.getElementById('ticketsList').classList.add('hidden')
                 }
 
             } catch (error) {
@@ -1342,15 +1354,19 @@ const dept = categorieslist.indexOf(selectedCategory) + 1; // +1 to start from 1
             }
         }
 function messagerender(messagerender, clientcodev, ticketval) {
-    const mysubject = subject; // subject should be an array of objects
+    const mysubject = subject;
 
     const matched = mysubject.find(item =>
         item.ticketNo && item.ticketNo.includes(ticketval)
     );
 
     let lastText = '';
+    let firstMatch = '';
+    let subtext = '';
     if (matched) {
+        firstMatch = matched.subject?.split('#')[0].trim() || '';
         lastText = matched.subject?.split('#').pop().trim() || '';
+        subtext = firstMatch + " " + lastText;
     } else {
         console.log("❌ No match found for ticketval:", ticketval);
     }
@@ -1359,7 +1375,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
     const messagediv = document.getElementById('messagereplaytemp');
     messagediv.innerHTML = ''; // Clear previous content
 
-    let supportCardAdded = false; // ✅ Flag to ensure only one support card is added
+    let supportCardAdded = false;
 
     ticketmessage.forEach((item) => {
         if (
@@ -1388,49 +1404,49 @@ function messagerender(messagerender, clientcodev, ticketval) {
         });
 
         const clientcodeint = clientcodev.charAt(0);
+        const isRightSide = cardcolor == 1;
+
+        const bgColor = isRightSide ? 'bg-blue-50' : 'bg-gray-50';
 
         const messageElement = document.createElement('div');
-        messageElement.className = 'flex items-center space-x-3 p-2 mb-2 rounded-lg';
-        messageElement.classList.add(cardcolor == 0 ? 'bg-gray-50' : 'bg-blue-50');
+        messageElement.className = `flex ${isRightSide ? 'justify-end' : 'justify-start'} p-2 mb-2`;
 
-        const userIcon = cardcolor == 0 ? 
-            `<svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>` :
-            `<span class="text-blue-600 font-medium text-md">${clientcodeint}</span>`;
+        const userIcon = cardcolor == 0
+            ? `<svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
+            : `<span class="text-blue-600 font-medium text-md">${clientcodeint}</span>`;
 
-        const displayName = cardcolor == 0 ? (item.user_name || "User") : lastText;
+        const displayName = cardcolor == 0 ? (item.user_name || "User") : subtext;
 
         messageElement.innerHTML = `
-            <div class="w-full px-2 py-2">
-                <div class="flex items-start space-x-3">
-                    <div class="w-10 h-10 ${cardcolor == 0 ? 'bg-yellow-100' : 'bg-blue-200'} rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="flex w-full ${isRightSide ? 'justify-end' : 'justify-start'}">
+                <div class="flex ${isRightSide ? 'flex-row-reverse' : 'flex-row'} items-start w-full max-w-full">
+                    <div class="w-10 h-10 ${isRightSide ? 'bg-blue-200' : 'bg-yellow-100'} rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         ${userIcon}
                     </div>
-                    <div class="flex-1 w-full">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-medium text-gray-900">${displayName}</h3>
-                            <p class="text-xs text-gray-500">${formattedDate}</p>
+                    <div class="ml-3 mr-3 w-full">
+                        <div class="inline-block rounded-2xl ${bgColor} px-4 py-3 shadow-sm w-full">
+                            <div class="${isRightSide ? 'text-right' : 'text-left'}">
+                                <h3 class="text-sm font-semibold text-gray-800 mb-1 text-left" >${displayName}</h3>
+                                <p class="text-sm text-gray-800 text-left">${textexpert || ''}</p>
+                                ${attachmentUrl ? `
+                                    <div class=" flex justify-start w-full">
+                                        <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-sm">
+                                            View Attachment
+                                        </button>
+                                    </div>` : ''}
+                                <div class="text-xs text-gray-500 mt-2 flex w-full justify-end">${formattedDate}</div>
+                            </div>
                         </div>
-                        <div class="text-sm text-gray-600 mb-2">
-                            <p>${textexpert || ''}</p>
-                        </div>
-                        ${attachmentUrl ? `
-                            <div class="mt-2">
-                                <button type="button" onclick="openImageViewer('${attachmentUrl}')" class="text-blue-500 text-sm">
-                                    View Attachment
-                                </button>
-                            </div>` : ''}
                     </div>
                 </div>
             </div>
         `;
+
         messagediv.appendChild(messageElement);
 
-        // ✅ Add support card only after first message
         if (!supportCardAdded) {
             const supportCard = document.createElement('div');
-            supportCard.className = 'bg-gray-50 rounded-lg p-4 mb-4';
+            supportCard.className = 'rounded-lg p-4 mb-4';
 
             supportCard.innerHTML = `
                 <div class="flex items-start space-x-3">
@@ -1439,13 +1455,11 @@ function messagerender(messagerender, clientcodev, ticketval) {
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <div class="flex-1">
-                        <div class="flex items-center justify-between mb-2">
+                    <div class="flex-1 px-2 py-2 rounded-lg bg-gray-50">
+                        <div class="flex items-center justify-between">
                             <h3 class="font-medium text-gray-900">Support</h3>
                         </div>
-                        <div class="bg-white rounded p-3 mb-2">
-                            <p class="text-sm text-gray-700">Your ticket has been created successfully. Our support team will get back to you in 24–48 hours.</p>
-                        </div>
+                        <p class="text-sm text-gray-700">Your ticket has been created successfully. Our support team will get back to you in 24–48 hours.</p>
                     </div>
                 </div>
             `;
@@ -1454,7 +1468,6 @@ function messagerender(messagerender, clientcodev, ticketval) {
         }
     });
 
-    // Show buttons (Thank You / Revoke)
     const revokeBtn = document.getElementById('revokecontainer');
     if (revokeBtn) {
         revokeBtn.innerHTML = `
@@ -1467,6 +1480,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
         `;
     }
 }
+
 
         function closeTicketModal() {
             const modal = document.getElementById('ticketModal');
