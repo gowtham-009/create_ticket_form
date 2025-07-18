@@ -402,7 +402,7 @@
                 <div id="loading" class="w-14 h-14 hidden border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
             <!-- Modal Content  -->
-            <div class="p-6 space-y-6 " id="incontentmodel">
+            <div class="p-2 space-y-2 " id="incontentmodel">
                 <!-- Original Message -->
 
                 <div id="messagereplaytemp" class="w-full p-1" >
@@ -419,7 +419,7 @@
                 </div>
 
                 <!-- Reply Form -->
-                <div class="border-t pt-6" id="closenonecontent">
+                <div class="border-t pt-2" id="closenonecontent">
                     <form id="replyForm" class="space-y-4">
 
                         <input type="text" name="" class="hidden" id="repclientcode">
@@ -1418,7 +1418,7 @@ function messagerender(messagerender, clientcodev, ticketval) {
         messageElement.className = `flex ${isRightSide ? 'justify-end' : 'justify-start'} p-2 mb-2`;
 
         const userIcon = cardcolor == 0
-         ? `<div class="w-12 h-12 flex justify-center items-center rounded-full ">
+         ? `<div class="w-10 h-10 flex justify-center items-center bg-gray-100 rounded-full ">
              <img src="./images/glogo.jpg" alt="Logo" class="rounded-full w-8 h-8" />
 
             </div>`
@@ -1455,21 +1455,25 @@ function messagerender(messagerender, clientcodev, ticketval) {
 
         if (!supportCardAdded) {
             const supportCard = document.createElement('div');
-            supportCard.className = 'rounded-lg p-2 mb-4';
+            supportCard.className = 'rounded-lg p-2 ';
 
             supportCard.innerHTML = `
-                <div class="flex items-start space-x-3">
-                    <div class="w-8 h-8 flex justify-center items-center rounded-full ">
-             <img src="./images/glogo.jpg" alt="Logo" class="rounded-full w-8 h-8" />
+                <div class="w-full max-w-4xl mx-auto flex justify-start  mb-2">
+  <div class="flex items-start w-full">
+    <div class="w-10 h-10 mt-1 flex items-center justify-center">
+      <img src="./images/glogo.jpg" alt="Logo" class="rounded-full w-8 h-8" />
+    </div>
+    <div class="ml-3 px-4 py-3 rounded-2xl bg-gray-50 w-full shadow-sm">
+      <div class="text-left">
+        <h3 class="text-sm font-semibold text-gray-800 mb-1">Support</h3>
+        <p class="text-sm text-gray-800 leading-4">
+          Your ticket has been created successfully. Our support team will get back to you in 24–48 hours.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
-            </div>
-                    <div class="flex-1 px-4 py-4 rounded-lg bg-gray-50 ">
-                        <div class="flex items-center justify-between">
-                            <h3 class="font-semibold text-gray-900 text-sm">Support</h3>
-                        </div>
-                        <p class="text-sm text-gray-800 mt-1 leading-4">Your ticket has been created successfully. Our support team will get back to you in 24–48 hours.</p>
-                    </div>
-                </div>
             `;
             messagediv.appendChild(supportCard);
             supportCardAdded = true;
