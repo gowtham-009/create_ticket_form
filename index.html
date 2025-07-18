@@ -615,60 +615,54 @@
         const enc = clientEncryption(getCurrentDate());
 
 
+let isClientCodeValid = false;
+const clientcodecheck = document.getElementById('clientCode');
+const clienterror = document.getElementById('invalidclientcode');
+let lastClientCode = ''; // Store previous value
 
-        let isClientCodeValid = false;
-        const clientcodecheck = document.getElementById('clientCode');
-        const clienterror = document.getElementById('invalidclientcode');
+clientcodecheck.addEventListener('focus', function () {
+    clienterror.classList.add('hidden');
+    clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
+    clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
+});
 
-        // ✅ When user focuses (clicks into) the input
-        clientcodecheck.addEventListener('focus', function () {
-            clienterror.classList.add('hidden');
-            clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
-            clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
-        });
+clientcodecheck.addEventListener('blur', async function () {
+    const clientCode = clientcodecheck.value.trim();
 
-        // ✅ When user blurs (clicks out of) the input
-        clientcodecheck.addEventListener('blur', async function () {
-            const clientCode = clientcodecheck.value.trim();
-            const formData = new FormData();
-            formData.append('ticket', enc);
+    // Only run API call if value changed
+    if (clientCode && clientCode !== lastClientCode) {
+        lastClientCode = clientCode; // Update last used code
+        const formData = new FormData();
+        formData.append('ticket', enc);
 
-            if (clientCode) {
-                try {
-                    const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=${encodeURIComponent(enc)}&ticket=${enc}&cid=${clientCode}`;
+        try {
+            const apiurl = `https://smartpayz.gwcindia.in/gwc-techexcel/client-master-techexcel-live.php?src=SMARTPAY&key=${encodeURIComponent(enc)}&ticket=${enc}&cid=${clientCode}`;
+            const response = await fetch(apiurl, { method: 'GET' });
+            const data = await response.json();
+            const branchurlParams = new URLSearchParams(window.location.search);
 
-                    const response = await fetch(apiurl, { method: 'GET' });
-                    const data = await response.json();
-
-                    const branchurlParams = new URLSearchParams(window.location.search);
-
-                    if (data.BranchCode === branchurlParams.get('branchcode')) {
-                        clienterror.classList.add('hidden');
-                        isClientCodeValid = true;
-                        clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
-                        clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
-                    } else {
-                        clienterror.classList.remove('hidden');
-                        isClientCodeValid = false;
-                        clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
-                        clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                    }
-
-                } catch (error) {
-                    clienterror.classList.remove('hidden');
-                    clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
-                    clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                    isClientCodeValid = false;
-                }
+            if (data.BranchCode === branchurlParams.get('branchcode')) {
+                clienterror.classList.add('hidden');
+                isClientCodeValid = true;
+                clientcodecheck.classList.remove('border-red-500', 'focus:ring-red-500');
+                clientcodecheck.classList.add('border-gray-300', 'focus:ring-goodwill-blue');
             } else {
                 clienterror.classList.remove('hidden');
+                isClientCodeValid = false;
                 clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
                 clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
-                isClientCodeValid = false;
             }
 
-            validateForm();
-        });
+        } catch (error) {
+            clienterror.classList.remove('hidden');
+            clientcodecheck.classList.remove('border-gray-300', 'focus:ring-goodwill-blue');
+            clientcodecheck.classList.add('border-red-500', 'focus:ring-red-500');
+            isClientCodeValid = false;
+        }
+
+        validateForm();
+    }
+});
 
         // Function to check if all required fields are filled
         function validateForm() {
