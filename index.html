@@ -175,7 +175,7 @@
                                     <span class="font-medium text-gray-800" id="branchname"></span> <span
                                         class="font-medium text-gray-800" id="branchcode"></span>
                                 </div>
-                                <div class="text-sm text-gray-500">
+                                <div class="text-sm text-gray-500 hidden" id="empcontent">
                                     Employee Name & Code : <span id="employeeName"></span> <span
                                         id="employeecode"></span>
                                 </div>
@@ -267,8 +267,20 @@
 
                     <!-- View Tickets Tab Content -->
                     <div id="viewTicketsTabContent" class="hidden">
+
+                          <div id="noticket" class="w-full p-1 hidden">
+                            <div class="text-center py-12">
+                                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2" id="tickettext">No Opended Tickets</h3>
+                                <p class="text-gray-500" id="ticketpara">Opened tickets will appear here once they are completed.</p>
+                            </div>
+                        </div>
                         <!-- Search Bar -->
-                        <div class="mb-6">
+                        <div class="mb-6" id="searchnoticket">
                             <div class="relative mb-4">
                                 <input type="text" id="searchClientCode" placeholder="Search by Client Code"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
@@ -288,17 +300,7 @@
                             </div>
                         </div>
 
-                        <div id="noticket" class="w-full p-1 hidden">
-                            <div class="text-center py-12">
-                                <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <h3 class="text-lg font-medium text-gray-900 mb-2" id="tickettext">No Resolved Tickets</h3>
-                                <p class="text-gray-500" id="ticketpara">Resolved tickets will appear here once they are completed.</p>
-                            </div>
-                        </div>
+                      
                         <!-- Tickets List -->
                         <div class="space-y-4 hidden" id="ticketsList">
 
@@ -541,6 +543,7 @@
 
             if (employeeCode) {
                 document.getElementById('employeecode').innerText = employeeCode;
+                document.getElementById('empcontent').classList.remove('hidden')
             }
         };
 
@@ -677,8 +680,7 @@
             const branchname = document.getElementById('branchname').innerText.trim();
             const employeeName = document.getElementById('employeeName').innerText.trim();
             const branchcode = document.getElementById('branchcode').innerText.trim();
-            const employeeCode = document.getElementById('employeecode').innerText.trim();
-
+        
             const isValid = (
                 clientCode !== '' &&
                 isClientCodeValid && // ✅ Check if client code is valid
@@ -687,9 +689,7 @@
                 subject !== '' &&
                 editorContent !== '<p><br></p>' &&
                 branchname !== '' &&
-                employeeName !== '' &&
-                branchcode !== '' &&
-                employeeCode !== ''
+                branchcode !== '' 
             );
 
             document.getElementById('createtokenbtn').disabled = !isValid;
@@ -1113,10 +1113,8 @@
 
                     document.getElementById('noticket').classList.remove('hidden')
                     document.getElementById('ticketsList').classList.add('hidden')
-                    document.getElementById('tickettext').innerHTML=''
-                    document.getElementById('tickettext').innerText='No Open Tickets'
-                      document.getElementById('ticketpara').innerHTML=''
-                    document.getElementById('ticketpara').innerText='Opened tickets will appear here once they are completed.'
+                    document.getElementById('searchnoticket').classList.add('hidden')
+                  
                     
 
                 }
@@ -1734,10 +1732,7 @@
             const closeparams = new URLSearchParams(window.location.search);
             const branchCode = closeparams.get('branchcode');
 
-            if (!branchCode) {
-                console.error("branchcode parameter is missing in the URL");
-                return;
-            }
+           
 
             const apiurl = `https://g1.gwcindia.in/ticket-api/br-emp-tickets.php?ticket_status=closed&createdBy=BRANCH-EMP&usercode=${branchCode}`;
             const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
