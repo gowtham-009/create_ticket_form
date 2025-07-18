@@ -990,9 +990,9 @@
             formData.append('department', dept + 1);
             formData.append('text', content);
             formData.append('branchName', posturlparams.get('branchname'))
-            formData.append('empcode', posturlparams.get('empCode'));
+            formData.append('empcode', posturlparams.get('empCode') || '' );
             formData.append('subject', document.getElementById('subject').value);
-            formData.append('branchCode', posturlparams.get('branchcode'));
+           formData.append('branchCode', posturlparams.get('branchcode'));
             formData.append('subcat', document.getElementById('subCategory').value);
             formData.append('clientCode', document.getElementById('clientCode').value);
 
