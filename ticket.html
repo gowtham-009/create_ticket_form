@@ -268,10 +268,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 " id="success"></h3>
-                <p class="text-center mt-1 text-gray-500 font-bold text-lg">Ticket No:#<span id="ticketid"></span></p>
-                <p class="text-gray-800 text-sm text-center mt-1">Your ticket has been updated successfully. Our support
-                    team will get back to you in 24-48 business hours.</p>
+                <h3 class="text-lg font-medium text-gray-900 ">Successfully saved your query.</h3>
+                <p class="text-center mt-1 text-gray-500 font-bold text-lg">Query no:#<span id="ticketid"></span></p>
+                <p class="text-gray-800 text-sm text-center mt-1">Our team will get back to you within 24 - 48 business hours..</p>
 
                 <button id="closeModal"
                     class="bg-goodwill-blue mt-2 text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
@@ -292,7 +291,7 @@
 
                 </div>
                 <h3 class="text-lg font-medium text-gray-900 mb-2" id="error"></h3>
-                <p class="text-center" id="ticketid"></p>
+                <!-- <p class="text-center" id="ticketid"></p> -->
 
                 <button id="closeModalerror"
                     class="bg-goodwill-blue text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
@@ -554,13 +553,16 @@
 
                 const dataval = await response.json();
                 if (dataval.status == 'ok') {
-                    // Show success modal
+                   
                     successModal.classList.remove('hidden');
+                    
                     successModal.querySelector('.transform').classList.remove('scale-95');
+                    
                     successModal.querySelector('.transform').classList.add('scale-100');
-
-                    document.getElementById('success').innerText = dataval.message
+                   
+                  
                     document.getElementById('ticketid').innerText = dataval.data.ticket_no
+                    console.log('uihiu',  dataval.data.ticket_no)
                 }
                 else if (dataval.status == 'error') {
 
