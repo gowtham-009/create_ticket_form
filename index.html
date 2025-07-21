@@ -60,6 +60,7 @@
 
         #editor-container2 {
             cursor: text;
+           
         }
 
         /* Quill-specific styling */
@@ -72,7 +73,11 @@
         cursor: text;
     } */
 
-        /* Make sure the editor is visible and interactive */
+   
+
+.ql-editor {
+  font-size: 20px; /* Adjust this value as needed */
+}
         .ql-container.ql-snow {
             border: none;
             height: calc(100% - 42px);
@@ -554,20 +559,18 @@
         };
 
 
-
-
-        const quill = new Quill('#editor', {
-            theme: 'snow',
-            modules: {
-                toolbar: [
-                    ['bold', 'italic', 'underline', 'strike'],
-                    ['blockquote', 'code-block'],
-                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                    ['link']
-                ]
-            }
-
-        });
+      const quill = new Quill('#editor', {
+  theme: 'snow',
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+     
+      ['link']
+    ]
+  }
+});
         const quill2 = new Quill('#editor2', {
             theme: 'snow',
 
@@ -1062,21 +1065,11 @@ clientcodecheck.addEventListener('blur', async function () {
 
         closeModalerror.addEventListener('click', function () {
             errorModal.classList.add('hidden');
-            document.getElementById('clientCode').value = ''
-            document.getElementById('subject').value = ''
-            document.getElementById('category').value = ''
-            document.getElementById('subCategory').value = ''
-            quill.root.innerHTML = '';
-            quill.setText('');
+           
 
             clearFileUpload()
 
-            uploadedFiles.innerHTML = "";
-            uploadedFiles.classList.add('hidden');
-
-            currentUploadedFile = null;
-
-            uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
+          
 
         })
 
@@ -1553,9 +1546,9 @@ const cleanedHtml = tempDiv.innerHTML;
             const revokeBtn = document.getElementById('revokecontainer');
             if (revokeBtn) {
                 revokeBtn.innerHTML = `
-            <button id="thankbtn" onclick="sendthankyou('${ticketval}','${clientcodev}')" class="bg-green-500 w-full text-white px-4 py-2 rounded hover:bg-green-600">
-                Ok, Thankyou
-            </button>
+           <button id="thankbtn" onclick="sendthankyou()" class="bg-green-500 w-full text-white px-4 py-2 rounded hover:bg-green-600">
+    Ok, Thankyou
+</button>
             <button id="revokebtn" onclick="ticketrevoke('${ticketval}','${clientcodev}', 1)" class="bg-goodwill-blue text-white w-full px-4 py-2 rounded hover:bg-blue-600 ml-2">
                 Reopen
             </button>
@@ -2007,8 +2000,6 @@ function closerenderAllAccordions() {
                 if (result.status == 'ok') {
                     document.getElementById('ticketModal').classList.add('hidden')
                     switchTab('viewTickets')
-
-
                 } else {
                     console.log('⚠️ Failed to revoke ticket:', result.message || result);
 
@@ -2021,32 +2012,20 @@ function closerenderAllAccordions() {
 
 
 
-        async function sendthankyou(ticket, clientcode) {
-            const apiurl = 'https://g1.gwcindia.in/ticket-api/reply-ticket.php';
-            const branchparama = new URLSearchParams(window.location.search)
-            const formData = new FormData
-            formData.append('clientcode', clientcode);
-            formData.append('ticket_no', ticket);
-            formData.append('text', 'Ok, Thankyou');
-            formData.append('branchCode', branchparama.get('branchcode'));
+  function sendthankyou() {
+    const thankBtn = document.getElementById('thankbtn');
+    const revokeBtn = document.getElementById('revokebtn');
+    
+    thankBtn.disabled = true;
+    revokeBtn.disabled = true;
 
-            try {
-                const response = await fetch(apiurl, {
-                    method: 'POST',
-                    body: formData
-                });
+    thankBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+    thankBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+    
+    revokeBtn.classList.remove('bg-goodwill-blue', 'hover:bg-blue-600');
+    revokeBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+}
 
-                const result = await response.json();
-                console.log('Reply sent response:', result);
-                if (result.status == 'ok') {
-                    document.getElementById('thankbtn').classList.add('hidden')
-
-                }
-
-            } catch (error) {
-                console.error('Error sending reply:', error);
-            }
-        }
 
     </script>
 </body>
