@@ -1,0 +1,6 @@
+{
+  "statusOptions": ["Open", "Close", "Waiting", "Progress"],
+  "complaintFormFields": ["Complaint Type", "Description", "Date of Incident", "Location"],
+  "alertTypes": ["Email", "SMS", "Push Notification", "In-App Alert"],
+  "grievancePriorities": ["High", "Medium", "Low", "Urgent"]
+}

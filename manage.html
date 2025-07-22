@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Branch Create Ticket - Goodwill</title>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        'goodwill-blue': '#4F46E5',
+                        'goodwill-dark-blue': '#3730A3',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans min-h-screen">
+    <!-- Main Container -->
+    <div class="min-h-screen bg-gray-100 py-4 px-4 sm:py-8 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Card Container -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+
+
+                <!-- Form Content -->
+                <div class="p-6 sm:p-8">
+                    <!-- Create Tab Content -->
+                    <div id="createTabContent">
+                        <!-- Branch and Employee Info -->
+
+
+                        <!-- Form -->
+                        <form id="ticketForm" class="space-y-6">
+                            <div>
+                                <input type="text" id="claimamountone" placeholder="Claim Amount JV Posted"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                    onpaste="setTimeout(() => this.value = this.value.replace(/[^0-9]/g, ''), 0)" />
+                            </div>
+
+                            <div>
+                                <input type="text" id="subject" placeholder="Subject"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500" />
+                            </div>
+
+                            <div>
+                                <input type="text" id="alterDate" placeholder="Alter date"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onfocus="this.type='date'" onblur="if(this.value===''){this.type='text'}" />
+                            </div>
+
+                            <div>
+                                <textarea id="description" placeholder="Description"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500 resize-none"
+                                    rows="3"></textarea>
+                            </div>
+
+                            <div>
+                                <textarea id="action" placeholder="Action"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500 resize-none"
+                                    rows="3"></textarea>
+                            </div>
+
+                            <div>
+                                <input type="text" id="remarks" placeholder="Remarks"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500" />
+                            </div>
+
+
+                            <div class="relative w-full">
+                                <select id="status"
+                                    class="w-full appearance-none px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white pr-10">
+                                    <option value="" disabled selected>Status</option>
+                                   
+                                </select>
+
+                                <!-- Custom arrow icon -->
+                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                                    class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 w-4 h-4 text-gray-500">
+                                    <path
+                                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                        clip-rule="evenodd" fill-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                             <div>
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-goodwill-blue transition-colors duration-200">
+                                    <div class="flex flex-col items-center">
+                                        <svg class="w-12 h-8 text-goodwill-blue mb-4" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                        </svg>
+                                        <p class="text-goodwill-blue font-medium mb-2">Browse file to upload</p>
+                                        <p class="text-sm text-gray-500">Drag and drop description files here or click to browse</p>
+                                       <input type="file" id="fileUpload" class="hidden" accept=".pdf,application/pdf">
+
+                                    </div>
+                                </div>
+
+
+                                <div id="uploadedFiles" class="mt-4 space-y-1 hidden">
+
+                                </div>
+                            </div>
+
+                            <div class="relative w-full">
+                                <select id="complaintform"
+                                    class="w-full appearance-none px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white pr-10">
+                                    <option value="" disabled selected>Compliant Received Form</option>
+                                   
+                                </select>
+
+                                <!-- Custom arrow icon -->
+                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                                    class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 w-4 h-4 text-gray-500">
+                                    <path
+                                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                        clip-rule="evenodd" fill-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                             <div class="relative w-full">
+                                <select id="alerttype"
+                                    class="w-full appearance-none px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white pr-10">
+                                    <option value="" disabled selected>Alert Type</option>
+                                    <option value="1"  >1</option>
+
+                                </select>
+
+                                <!-- Custom arrow icon -->
+                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                                    class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 w-4 h-4 text-gray-500">
+                                    <path
+                                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                        clip-rule="evenodd" fill-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                             <div class="relative w-full">
+                                <select id="grievancepriority"
+                                    class="w-full appearance-none px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 bg-white pr-10">
+                                    <option value="" disabled selected> Grievance Priority</option>
+                                    <option value="1"  >1</option>
+
+                                </select>
+
+                                <!-- Custom arrow icon -->
+                                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
+                                    class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 w-4 h-4 text-gray-500">
+                                    <path
+                                        d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                        clip-rule="evenodd" fill-rule="evenodd" />
+                                </svg>
+                            </div>
+
+                             <div>
+                                <input type="text" id="clientCode" placeholder="Client Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+
+                             <div>
+                                <input type="text" id="branchcode" placeholder="Branch Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+                            <div>
+                                <input type="text" id="subbrokercode" placeholder="Sub Broker Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+                              <div>
+                                <input type="text" id="mastercode" placeholder="Master Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+                            <div>
+                                <input type="text" id="regioncode" placeholder="Region Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+
+                            <div>
+                                <input type="text" id="apvcode" placeholder="APV Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+
+                            </div>
+
+                            <div>
+                                <input type="text" id="vpcode" placeholder="vp Code"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[A-Za-z0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.toUpperCase()"
+                                    onpaste="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase()">
+                            </div>
+
+                            <div>
+                                <input type="text" id="claimamount" placeholder="Claim Amount"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                    onkeypress="return /[0-9]/.test(event.key)"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                    onpaste="setTimeout(() => this.value = this.value.replace(/[^0-9]/g, ''), 0)" />
+                            </div>
+
+
+
+
+                            <!-- Submit Button -->
+                            <div>
+                                <button type="submit" id="createtokenbtn"
+                                    class="w-full bg-goodwill-blue text-white py-3 px-6 rounded-lg font-medium hover:bg-goodwill-dark-blue focus:outline-none focus:ring-2 focus:ring-goodwill-blue focus:ring-offset-2  active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                    disabled>
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-3/5 transform transition-all duration-300 scale-95">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 ">Successfully saved your query.</h3>
+                <p class="text-center mt-1 text-gray-500 font-bold text-lg">Query no:#<span id="ticketid"></span></p>
+                <p class="text-gray-800 text-sm text-center mt-1">Our team will get back to you within 24 -
+                    48 business hours..</p>
+
+                <button id="closeModal"
+                    class="bg-goodwill-blue mt-2 text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
+                    Ok
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="errorModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-3/5 transform transition-all duration-300 scale-95">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.29 3.86L1.82 18a1 1 0 0 0 .86 1.5h18.64a1 1 0 0 0 .86-1.5L13.71 3.86a1 1 0 0 0-1.72 0zM12 9v4m0 4h.01" />
+                    </svg>
+
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2" id="error"></h3>
+                <!-- <p class="text-center" id="ticketid"></p> -->
+
+                <button id="closeModalerror"
+                    class="bg-goodwill-blue text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
+                    Ok
+                </button>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    <script>
+
+   
+    window.onload = function () {
+        fetchDataFromAPI();
+    };
+
+    function fetchDataFromAPI() {
+        fetch('./selectelement.json') // replace with your real API endpoint
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse JSON from response
+            })
+            .then(data => {
+                console.log("Fetched JSON:", data);
+                handleFetchedData(data);
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
+    }
+
+   function handleFetchedData(data) {
+    const statusSelect = document.getElementById('status');
+    statusSelect.length = 1;
+    data.statusOptions.forEach(status => {
+        const option = document.createElement('option');
+        option.value = status;
+        option.textContent = status;
+        statusSelect.appendChild(option);
+    });
+
+     const complaintFormSelect = document.getElementById('complaintform');
+    complaintFormSelect.length = 1; // Keep only placeholder
+    data.complaintFormFields.forEach(field => {
+        const option = document.createElement('option');
+        option.value = field;
+        option.textContent = field;
+        complaintFormSelect.appendChild(option);
+    });
+
+      const alerttype = document.getElementById('alerttype');
+    alerttype.length = 1; // Keep only placeholder
+    data.alertTypes.forEach(field => {
+        const option = document.createElement('option');
+        option.value = field;
+        option.textContent = field;
+        alerttype.appendChild(option);
+    });
+
+      const grievancepriority = document.getElementById('grievancepriority');
+    grievancepriority.length = 1; // Keep only placeholder
+    data.grievancePriorities.forEach(field => {
+        const option = document.createElement('option');
+        option.value = field;
+        option.textContent = field;
+        grievancepriority.appendChild(option);
+    });
+}
+
+
+        const input = document.getElementById('alterDate');
+
+        input.addEventListener('change', function () {
+            if (this.value) {
+                const [yyyy, mm, dd] = this.value.split("-");
+                this.type = "text";
+                this.value = `${dd}-${mm}-${yyyy}`;
+            }
+        });
+
+          function validateForm() {
+            const claimamountone = document.getElementById('claimamountone').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const alterDate = document.getElementById('alterDate').value.trim();
+            const description = document.getElementById('description').value.trim();
+            const action = document.getElementById('action').value.trim();
+            const remarks = document.getElementById('remarks').value.trim();
+            const status = document.getElementById('status').value.trim();
+            const complaintform = document.getElementById('complaintform').value.trim();
+            const alerttype = document.getElementById('alerttype').value.trim();
+            const grievancepriority = document.getElementById('grievancepriority').value.trim();
+            const clientCode = document.getElementById('clientCode').value.trim();
+            const branchcode = document.getElementById('branchcode').value.trim();
+            const subbrokercode = document.getElementById('subbrokercode').value.trim();
+            const mastercode = document.getElementById('mastercode').value.trim();
+            const regioncode = document.getElementById('regioncode').value.trim();
+            const apvcode = document.getElementById('apvcode').value.trim();
+            const vpcode = document.getElementById('vpcode').value.trim();
+            const claimamount = document.getElementById('claimamount').value.trim();
+
+        
+            const isValid = (
+                claimamountone !== '' &&
+                subject!=='' &&
+                alterDate !== '' &&
+                description !== '' &&
+                action !== '' &&
+                remarks !== '' &&
+                status !== '' &&
+                complaintform !== '' &&
+                 alerttype !== '' &&
+                grievancepriority!=='' &&
+                clientCode !== '' &&
+                branchcode !== '' &&
+                subbrokercode !== '' &&
+                mastercode !== '' &&
+                regioncode !== '' &&
+                apvcode !== '' &&
+                vpcode !== '' &&
+                claimamount !== '' 
+            );
+
+            document.getElementById('createtokenbtn').disabled = !isValid;
+            return isValid;
+        }
+
+        document.getElementById('claimamountone').addEventListener('input', validateForm);
+        document.getElementById('subject').addEventListener('input', validateForm);
+        document.getElementById('alterDate').addEventListener('input', validateForm);
+        document.getElementById('description').addEventListener('input', validateForm);
+        document.getElementById('action').addEventListener('input', validateForm);
+        document.getElementById('remarks').addEventListener('input', validateForm);
+        document.getElementById('status').addEventListener('input', validateForm);
+        document.getElementById('complaintform').addEventListener('input', validateForm);
+        document.getElementById('alerttype').addEventListener('input', validateForm);
+        document.getElementById('grievancepriority').addEventListener('input', validateForm);
+        document.getElementById('clientCode').addEventListener('input', validateForm);
+        document.getElementById('branchcode').addEventListener('input', validateForm);
+        document.getElementById('subbrokercode').addEventListener('input', validateForm);
+        document.getElementById('mastercode').addEventListener('input', validateForm);
+        document.getElementById('regioncode').addEventListener('input', validateForm);
+        document.getElementById('apvcode').addEventListener('input', validateForm);
+        document.getElementById('vpcode').addEventListener('input', validateForm);
+        document.getElementById('claimamount').addEventListener('input', validateForm);
+
+        
+
+        const uploadedFilesList = [];
+        // File upload functionality
+        const uploadArea = fileUpload.parentElement.parentElement;
+        const uploadedFiles = document.getElementById('uploadedFiles');
+
+        // Global variable to store the single uploaded file
+        let currentUploadedFile = null;
+        uploadArea.addEventListener('click', () => fileUpload.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('border-goodwill-blue', 'bg-blue-50');
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-goodwill-blue', 'bg-blue-50');
+
+            const files = Array.from(e.dataTransfer.files);
+            if (files.length > 1) {
+
+                return;
+            }
+            handleFiles(files);
+        });
+
+        fileUpload.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+    if (files.length === 0) return;
+
+    const file = files[0]; // Take only the first file
+
+    if (file.type !== 'application/pdf') {
+        alert('Only PDF files are allowed.');
+        clearFileUpload();
+        return;
+    }
+
+    // Clear previous upload
+    uploadedFiles.innerHTML = "";
+    currentUploadedFile = null;
+
+    const fileItem = createFileItem(file);
+    uploadedFiles.appendChild(fileItem);
+    uploadedFiles.classList.remove('hidden');
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const base64String = e.target.result.split(',')[1];
+        currentUploadedFile = {
+            fileName: file.name,
+            fileContent: base64String,
+            fileSize: file.size,
+            fileType: file.type
+        };
+    };
+    reader.readAsDataURL(file);
+}
+
+function createFileItem(file) {
+    const fileItem = document.createElement('div');
+    fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg border';
+
+    fileItem.innerHTML = `
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-red-100 rounded flex items-center justify-center">
+                <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 2a2 2 0 00-2 2v16c0 1.103.897 2 2 2h12a2 2 0 002-2V8l-6-6H6zm7 1.414L18.586 9H13V3.414zM7 13h2.5a1.5 1.5 0 010 3H8v1.5a.5.5 0 01-1 0V13zm1 2h1.5a.5.5 0 000-1H8v1zm5-2h1.5a1.5 1.5 0 010 3H13v1.5a.5.5 0 01-1 0V13zm1 2h.5a.5.5 0 000-1H13v1zM16.5 13a.5.5 0 000 1H17a.5.5 0 01.5.5v2a.5.5 0 01-1 0V15h-.5a.5.5 0 010-1H16v-1h.5z"/>
+                </svg>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-gray-900">${file.name}</p>
+                <p class="text-xs text-gray-500">${formatFileSize(file.size)} - Uploaded</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <button type="button" class="text-gray-400 hover:text-gray-600" onclick="this.parentElement.parentElement.remove()">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+        </div>
+    `;
+
+    return fileItem;
+}
+
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function clearFileUpload() {
+            // Clear the file input value
+            document.getElementById('fileUpload').value = '';
+
+            // Clear the displayed files
+            uploadedFiles.innerHTML = "";
+            uploadedFiles.classList.add('hidden');
+
+            // Reset the current file variable
+            currentUploadedFile = null;
+        }
+
+
+
+const createticket =  () => {
+    alert('Successfully posted')
+}
+
+
+        // const createticket = async () => {
+        //     const apiurl = 'https://g1.gwcindia.in/ticket-api/create-ticket-v2.php';
+        //     // const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
+
+
+
+
+
+
+        //     const content = quill.root.innerHTML;
+        //     const posturlparams = new URLSearchParams(window.location.search);
+
+        //     const formData = new FormData();
+        //     formData.append('name', document.getElementById('name').value);
+        //     formData.append('mobile', document.getElementById('phone').value);
+        //     formData.append('emailid', document.getElementById('email').value);
+        //     formData.append('subject_cc', document.getElementById('subject').value);
+        //     formData.append('text', content);
+
+
+
+
+        //     // Only append filename and attachment if a file exists
+        //     if (currentUploadedFile) {
+        //         formData.append('filename', currentUploadedFile.fileName);
+        //         formData.append('attachment', currentUploadedFile.fileContent);
+        //     }
+
+        //     try {
+        //         const response = await fetch(apiurl, {
+        //             method: 'POST',
+        //             // headers: {
+        //             //     'Authorization': header
+        //             // },
+        //             body: formData
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+
+        //         const dataval = await response.json();
+        //         if (dataval.status == 'ok') {
+
+        //             successModal.classList.remove('hidden');
+
+        //             successModal.querySelector('.transform').classList.remove('scale-95');
+
+        //             successModal.querySelector('.transform').classList.add('scale-100');
+
+
+        //             document.getElementById('ticketid').innerText = dataval.data.ticket_no
+        //             console.log('uihiu', dataval.data.ticket_no)
+        //         }
+        //         else if (dataval.status == 'error') {
+
+        //             errorModal.classList.remove('hidden');
+        //             errorModal.querySelector('.transform').classList.remove('scale-95');
+        //             errorModal.querySelector('.transform').classList.add('scale-100');
+
+        //             document.getElementById('error').innerText = dataval.message
+        //         }
+        //     } catch (error) {
+        //         console.error('Error:', error);
+
+        //     }
+        // };
+        // Form submission
+        ticketForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            createticket()
+
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', function () {
+            successModal.classList.add('hidden');
+
+        });
+
+        // Close modal when clicking outside
+        successModal.addEventListener('click', function (e) {
+            if (e.target === successModal) {
+                successModal.classList.add('hidden');
+            }
+        });
+
+        closeModalerror.addEventListener('click', function () {
+            errorModal.classList.add('hidden');
+
+
+            clearFileUpload()
+
+
+
+        })
+
+        closeModalerror.addEventListener('click', function (e) {
+            if (e.target === closeModalerror) {
+                closeModalerror.classList.add('hidden');
+            }
+        });
+
+    </script>
+</body>
+
+</html>
