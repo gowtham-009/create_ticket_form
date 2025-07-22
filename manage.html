@@ -668,7 +668,25 @@ function base64ToBlob(base64, mimeType = '') {
         // Close modal
         closeModal.addEventListener('click', function () {
             successModal.classList.add('hidden');
-
+             document.getElementById('clientCode').value=''
+             document.getElementById('branchcode').value=''
+            document.getElementById('subbrokercode').value=''
+            document.getElementById('mastercode').value=''
+            document.getElementById('regioncode').value=''
+            document.getElementById('apvcode').value=''
+            document.getElementById('vpcode').value=''
+            document.getElementById('claimamount').value=''
+            document.getElementById('claimamountone').value=''
+            document.getElementById('subject').value=''
+            document.getElementById('alterDate').value=''
+            document.getElementById('description').value=''
+            document.getElementById('action').value=''
+            document.getElementById('remarks').value=''
+            document.getElementById('status').value=''
+            document.getElementById('complaintform').value=''
+            document.getElementById('alerttype').value=''
+            document.getElementById('grievancepriority').value=''
+            clearFileUpload()
         });
 
         // Close modal when clicking outside
