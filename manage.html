@@ -271,10 +271,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-medium text-gray-900 ">Successfully saved your query.</h3>
-                <p class="text-center mt-1 text-gray-500 font-bold text-lg">Query no:#<span id="ticketid"></span></p>
+                <h3 class="text-lg font-medium text-gray-900 " id="success"></h3>
+                <!-- <p class="text-center mt-1 text-gray-500 font-bold text-lg">Query no:#<span id="ticketid"></span></p>
                 <p class="text-gray-800 text-sm text-center mt-1">Our team will get back to you within 24 -
-                    48 business hours..</p>
+                    48 business hours..</p> -->
 
                 <button id="closeModal"
                     class="bg-goodwill-blue mt-2 text-white px-4 py-2 rounded-lg hover:bg-goodwill-dark-blue transition-colors duration-200">
@@ -567,74 +567,97 @@ function createFileItem(file) {
 
 
 
-const createticket =  () => {
-    alert('Successfully posted')
+
+        // Utility: Convert base64 to Blob
+function base64ToBlob(base64, mimeType = '') {
+    const byteCharacters = atob(base64.split(',')[1] || base64);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length).fill().map((_, i) => slice.charCodeAt(i));
+        byteArrays.push(new Uint8Array(byteNumbers));
+    }
+
+    return new Blob(byteArrays, { type: mimeType });
 }
 
 
-        // const createticket = async () => {
-        //     const apiurl = 'https://g1.gwcindia.in/ticket-api/create-ticket-v2.php';
-        //     // const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
+        const createticket = async () => {
+            const apiurl = 'https://teamo.gwcindia.in/ticket/api-alert-management.php';
+            // const header = '6f584292813dcf325e4846b4a9913504091b9d0323d8057d7a1e27d351f9f46e2aeae512b7943b0e';
 
 
-        //     const content = quill.root.innerHTML;
-        //     const posturlparams = new URLSearchParams(window.location.search);
-
-        //     const formData = new FormData();
-        //     formData.append('name', document.getElementById('name').value);
-        //     formData.append('mobile', document.getElementById('phone').value);
-        //     formData.append('emailid', document.getElementById('email').value);
-        //     formData.append('subject_cc', document.getElementById('subject').value);
-        //     formData.append('text', content);
-
-
-
-
-        //     // Only append filename and attachment if a file exists
-        //     if (currentUploadedFile) {
-        //         formData.append('filename', currentUploadedFile.fileName);
-        //         formData.append('attachment', currentUploadedFile.fileContent);
-        //     }
-
-        //     try {
-        //         const response = await fetch(apiurl, {
-        //             method: 'POST',
-        //             // headers: {
-        //             //     'Authorization': header
-        //             // },
-        //             body: formData
-        //         });
-
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-
-        //         const dataval = await response.json();
-        //         if (dataval.status == 'ok') {
-
-        //             successModal.classList.remove('hidden');
-
-        //             successModal.querySelector('.transform').classList.remove('scale-95');
-
-        //             successModal.querySelector('.transform').classList.add('scale-100');
+           
+            const formData = new FormData();
+            formData.append('clientCode', document.getElementById('clientCode').value);
+            formData.append('branchCode', document.getElementById('branchcode').value);
+            formData.append('subBrokerCode', document.getElementById('subbrokercode').value);
+            formData.append('masterCode', document.getElementById('mastercode').value);
+            formData.append('regionCode', document.getElementById('regioncode').value);
+            formData.append('avpCode', document.getElementById('apvcode').value);
+            formData.append('vpCode', document.getElementById('vpcode').value);
+            formData.append('claimAmount', document.getElementById('claimamount').value);
+            formData.append('claimAmountJV', document.getElementById('claimamountone').value);
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('alterDate', document.getElementById('alterDate').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('action', document.getElementById('action').value);
+            formData.append('remarks', document.getElementById('remarks').value);
+            formData.append('status', document.getElementById('status').value);
+            formData.append('complaintType', document.getElementById('complaintform').value);
+            formData.append('alertType', document.getElementById('alerttype').value);
+            formData.append('grievancePriority', document.getElementById('grievancepriority').value);
 
 
-        //             document.getElementById('ticketid').innerText = dataval.data.ticket_no
-        //             console.log('uihiu', dataval.data.ticket_no)
-        //         }
-        //         else if (dataval.status == 'error') {
 
-        //             errorModal.classList.remove('hidden');
-        //             errorModal.querySelector('.transform').classList.remove('scale-95');
-        //             errorModal.querySelector('.transform').classList.add('scale-100');
 
-        //             document.getElementById('error').innerText = dataval.message
-        //         }
-        //     } catch (error) {
-        //         console.error('Error:', error);
 
-        //     }
-        // };
+            // Only append filename and attachment if a file exists
+            if (currentUploadedFile) {
+        const blob = base64ToBlob(currentUploadedFile.fileContent, currentUploadedFile.mimeType);
+        formData.append('filename', currentUploadedFile.fileName);
+        formData.append('fileData', blob, currentUploadedFile.fileName); // append as binary
+    }
+            try {
+                const response = await fetch(apiurl, {
+                    method: 'POST',
+                    // headers: {
+                    //     'Authorization': header
+                    // },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const dataval = await response.json();
+                if (dataval.status == 'ok') {
+
+                    successModal.classList.remove('hidden');
+
+                    successModal.querySelector('.transform').classList.remove('scale-95');
+
+                    successModal.querySelector('.transform').classList.add('scale-100');
+
+
+                    document.getElementById('success').innerText = dataval.desc
+                  
+                }
+                else if (dataval.status == 'error') {
+
+                    errorModal.classList.remove('hidden');
+                    errorModal.querySelector('.transform').classList.remove('scale-95');
+                    errorModal.querySelector('.transform').classList.add('scale-100');
+
+                    document.getElementById('error').innerText = dataval.message
+                }
+            } catch (error) {
+                console.error('Error:', error);
+
+            }
+        };
         // Form submission
         ticketForm.addEventListener('submit', function (e) {
             e.preventDefault();
