@@ -164,11 +164,12 @@
 
 
                             <div>
-                                <input type="text" id="name" placeholder=" Name"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                    onkeypress="return /[a-zA-Z\s]/.test(event.key)"
-                                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()"
-                                    onpaste="this.value = this.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase()">
+                               <input type="text" id="name" placeholder=" Name" 
+    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
+    onkeypress="return /[a-zA-Z\s]/.test(event.key)"
+    oninput="this.value = formatName(this.value)"
+    onpaste="setTimeout(() => this.value = formatName(this.value), 0)">
+
                             </div>
 
                             <div>
@@ -325,6 +326,11 @@
             }
         });
 
+        function formatName(value) {
+    value = value.replace(/[^a-zA-Z\s]/g, ''); // remove invalid characters
+    value = value.toLowerCase(); // convert all to lowercase
+    return value.replace(/\b\w/g, char => char.toUpperCase()); // capitalize first letter of each word
+}
         function validateEmail(input) {
             const emailError = document.getElementById('email-error');
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net|edu|gov|co\.in|info)$/;
@@ -558,7 +564,7 @@
                    
                   
                     document.getElementById('ticketid').innerText = dataval.data.ticket_no
-                    console.log('uihiu',  dataval.data.ticket_no)
+                  
                 }
                 else if (dataval.status == 'error') {
 
@@ -583,6 +589,14 @@
         // Close modal
         closeModal.addEventListener('click', function () {
             successModal.classList.add('hidden');
+            document.getElementById('name').value=''
+            document.getElementById('phone').value=''
+            document.getElementById('email').value=''
+            document.getElementById('subject').value=''
+               quill.root.innerHTML = '';
+                quill.setText('');
+
+                clearFileUpload()
           
         });
 
