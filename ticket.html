@@ -183,7 +183,7 @@
                             <div>
                                 <input type="email" id="email" placeholder="Email id"
                                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-goodwill-blue focus:border-transparent outline-none transition-all duration-200 text-gray-900 placeholder-gray-500"
-                                    oninput="validateEmail(this)" onblur="validateEmail(this)">
+                                    >
                             </div>
 
 
@@ -331,54 +331,67 @@
     value = value.toLowerCase(); // convert all to lowercase
     return value.replace(/\b\w/g, char => char.toUpperCase()); // capitalize first letter of each word
 }
-        function validateEmail(input) {
-            const emailError = document.getElementById('email-error');
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net|edu|gov|co\.in|info)$/;
+   const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
 
-            const value = input.value.trim();
+   function validateEmail(input) {
+      const value = input.value.trim();
+      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net|edu|gov|co\.in|info)$/;
+      const isValid = regex.test(value);
 
-            // Check if domain extension seems complete before validating
-            const domainCompleted = /\.(com|in|org|net|edu|gov|co\.in|info)$/.test(value);
+      if (!isValid && value !== '') {
+        input.classList.add('email-invalid');
+        emailError.classList.remove('hidden');
+      } else {
+        input.classList.remove('email-invalid');
+        emailError.classList.add('hidden');
+      }
 
-            if (!domainCompleted) {
-                emailError.classList.add('hidden');
-                input.classList.remove('email-invalid');
-                return false; // Not validated yet
-            }
+      return isValid;
+    }
 
-            if (!emailRegex.test(value)) {
-                emailError.classList.remove('hidden');
-                input.classList.add('email-invalid');
-                return false;
-            } else {
-                emailError.classList.add('hidden');
-                input.classList.remove('email-invalid');
-                return true;
-            }
-        }
 
-        function validateForm() {
-            const subject = document.getElementById('subject').value.trim();
-            const editorContent = quill.root.innerHTML.trim();
-            const name = document.getElementById('name').value;
-            const phoneno = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
+       document.addEventListener('click', (e) => {
+      if (e.target !== emailInput) {
+        validateEmail(emailInput);
+      }
+    });
 
-            // Validate email separately
-            const isEmailValid = validateEmail(document.getElementById('email'));
+    document.addEventListener('touchstart', (e) => {
+      if (e.target !== emailInput) {
+        validateEmail(emailInput);
+      }
+    });
 
-            const isValid = (
-                name !== '' &&
-                phoneno !== '' &&
-                email !== '' &&
-                isEmailValid && // Check if email is valid
-                subject !== '' &&
-                editorContent !== '<p><br></p>'
-            );
+    // 🔁 Clear error when focusing back into input
+    emailInput.addEventListener('focus', () => {
+      emailInput.classList.remove('email-invalid');
+      emailError.classList.add('hidden');
+    });
+    // Validate form
+    function validateForm() {
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const emailEl = document.getElementById('email');
+      const editorContent = quill.root.innerHTML.trim();
 
-            document.getElementById('createtokenbtn').disabled = !isValid;
-            return isValid;
-        }
+      const isEmailValid = validateEmail(emailEl);
+
+      const isValid = (
+        name !== '' &&
+        phone !== '' &&
+        emailEl.value.trim() !== '' &&
+        isEmailValid &&
+        subject !== '' &&
+        editorContent !== '<p><br></p>'
+      );
+
+      document.getElementById('createtokenbtn').disabled = !isValid;
+      return isValid;
+    }
+
+  
         // Add direct event listeners without debouncing
         document.getElementById('name').addEventListener('input', validateForm);
         document.getElementById('phone').addEventListener('input', validateForm);
