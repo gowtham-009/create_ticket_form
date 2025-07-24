@@ -331,68 +331,62 @@
     value = value.toLowerCase(); // convert all to lowercase
     return value.replace(/\b\w/g, char => char.toUpperCase()); // capitalize first letter of each word
 }
-   const emailInput = document.getElementById('email');
+ const emailInput = document.getElementById('email');
     const emailError = document.getElementById('email-error');
 
-   function validateEmail(input) {
-      const value = input.value.trim();
-      const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net|edu|gov|co\.in|info)$/;
-      const isValid = regex.test(value);
+    // Email validation only runs on blur
+    function validateEmailOnBlur() {
+        const value = emailInput.value.trim();
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const isValid = regex.test(value);
 
-      if (!isValid && value !== '') {
-        input.classList.add('email-invalid');
-        emailError.classList.remove('hidden');
-      } else {
-        input.classList.remove('email-invalid');
-        emailError.classList.add('hidden');
-      }
+        if (!isValid && value !== '') {
+            emailInput.classList.add('email-invalid');
+            emailError.classList.remove('hidden');
+            emailError.innerHTML = '<p class="text-sm text-red-600">Please enter a valid email address.</p>';
+        } else {
+            emailInput.classList.remove('email-invalid');
+            emailError.classList.add('hidden');
+        }
 
-      return isValid;
+        validateForm(); // Re-validate form after email blur
     }
 
-
-       document.addEventListener('click', (e) => {
-      if (e.target !== emailInput) {
-        validateEmail(emailInput);
-      }
-    });
-
-    document.addEventListener('touchstart', (e) => {
-      if (e.target !== emailInput) {
-        validateEmail(emailInput);
-      }
-    });
-
-    // 🔁 Clear error when focusing back into input
+    // Clear email error on focus
     emailInput.addEventListener('focus', () => {
-      emailInput.classList.remove('email-invalid');
-      emailError.classList.add('hidden');
+        emailInput.classList.remove('email-invalid');
+        emailError.classList.add('hidden');
     });
-    // Validate form
+
+    // Run email validation only on blur
+    emailInput.addEventListener('blur', validateEmailOnBlur);
+
+    // Validate the entire form
     function validateForm() {
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const subject = document.getElementById('subject').value.trim();
-      const emailEl = document.getElementById('email');
-      const editorContent = quill.root.innerHTML.trim();
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const email = emailInput.value.trim();
+        const editorContent = quill.root.innerHTML.trim();
 
-      const isEmailValid = validateEmail(emailEl);
+        const isEmailValid = !emailInput.classList.contains('email-invalid');
 
-      const isValid = (
-        name !== '' &&
-        phone !== '' &&
-        emailEl.value.trim() !== '' &&
-        isEmailValid &&
-        subject !== '' &&
-        editorContent !== '<p><br></p>'
-      );
+        const isValid =
+            name !== '' &&
+            phone !== '' &&
+            subject !== '' &&
+            email !== '' &&
+            isEmailValid &&
+            editorContent !== '' &&
+            editorContent !== '<p><br></p>';
 
-      document.getElementById('createtokenbtn').disabled = !isValid;
-      return isValid;
+        document.getElementById('createtokenbtn').disabled = !isValid;
+        return isValid;
     }
 
-  
-        // Add direct event listeners without debouncing
+ 
+
+   
         document.getElementById('name').addEventListener('input', validateForm);
         document.getElementById('phone').addEventListener('input', validateForm);
         document.getElementById('email').addEventListener('input', validateForm);
